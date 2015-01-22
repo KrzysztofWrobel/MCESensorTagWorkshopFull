@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Sensor Tag library</string>
+
+    <string name="dialog_error_no_ble">Bluetooth Low Energy technology is not supported on your device.</string>
+    <string name="dialog_error_no_bluetooth">Bluetooth is not supported on your device.</string>
+    <string name="dialog_enable_bluetooth">Please turn on Bluetooth to scan for SensorTag devices around you.</string>
+</resources>
