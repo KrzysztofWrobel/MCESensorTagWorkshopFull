@@ -34,7 +34,10 @@ Also you can take a look on [TI open source project for SensorTag](http://git.ti
 
 Developed By
 ============
+* Krzysztof Wróbel - <krzysztof@velocicaptor.com>
+* Aleksander Piotrowski - <alek@piotrowski.co>
 
+Initially forked from
 * Steven Rudenko - <steven.rudenko@gmail.com>
 
 License
