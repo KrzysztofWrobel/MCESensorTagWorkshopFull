@@ -45,15 +45,17 @@ public class TiMagnetometerSensor extends TiRangeSensors<float[], Float> {
 
     @Override
     public boolean isConfigUUID(String uuid) {
-        if (uuid.equals(UUID_PERIOD))
+        if (uuid.equals(UUID_PERIOD)) {
             return true;
+        }
         return super.isConfigUUID(uuid);
     }
 
     @Override
     public String getCharacteristicName(String uuid) {
-        if (UUID_PERIOD.equals(uuid))
+        if (UUID_PERIOD.equals(uuid)) {
             return getName() + " Period";
+        }
         return super.getCharacteristicName(uuid);
     }
 

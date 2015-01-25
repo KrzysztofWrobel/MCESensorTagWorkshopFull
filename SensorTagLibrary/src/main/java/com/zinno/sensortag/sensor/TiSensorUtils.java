@@ -23,22 +23,26 @@ public class TiSensorUtils {
      */
     public static Integer shortSignedAtOffset(BluetoothGattCharacteristic c, int offset) {
         Integer lowerByte = c.getIntValue(FORMAT_UINT8, offset);
-        if (lowerByte == null)
+        if (lowerByte == null) {
             return 0;
+        }
         Integer upperByte = c.getIntValue(FORMAT_SINT8, offset + 1); // Note: interpret MSB as signed.
-        if (upperByte == null)
+        if (upperByte == null) {
             return 0;
+        }
 
         return (upperByte << 8) + lowerByte;
     }
 
     public static Integer shortUnsignedAtOffset(BluetoothGattCharacteristic c, int offset) {
         Integer lowerByte = c.getIntValue(FORMAT_UINT8, offset);
-        if (lowerByte == null)
+        if (lowerByte == null) {
             return 0;
+        }
         Integer upperByte = c.getIntValue(FORMAT_UINT8, offset + 1); // Note: interpret MSB as unsigned.
-        if (upperByte == null)
+        if (upperByte == null) {
             return 0;
+        }
 
         return (upperByte << 8) + lowerByte;
     }

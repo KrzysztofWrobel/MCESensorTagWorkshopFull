@@ -179,14 +179,16 @@ public class BleManager implements BleExecutorListener {
             Log.i(TAG, "Attempting to start service discovery:" +
                     gatt.discoverServices());
 
-            if (serviceListener != null)
+            if (serviceListener != null) {
                 serviceListener.onConnected();
+            }
         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
             connectionState = STATE_DISCONNECTED;
             Log.i(TAG, "Disconnected from GATT server.");
 
-            if (serviceListener != null)
+            if (serviceListener != null) {
                 serviceListener.onDisconnected();
+            }
         }
     }
 
@@ -208,8 +210,9 @@ public class BleManager implements BleExecutorListener {
     @Override
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
-            if (serviceListener != null)
+            if (serviceListener != null) {
                 serviceListener.onServiceDiscovered();
+            }
         } else {
             Log.w(TAG, "onServicesDiscovered received: " + status);
         }
@@ -262,7 +265,8 @@ public class BleManager implements BleExecutorListener {
             }
         }
 
-        if (serviceListener != null)
+        if (serviceListener != null) {
             serviceListener.onDataAvailable(serviceUuid, characteristicUuid, text, data);
+        }
     }
 }

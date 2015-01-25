@@ -13,7 +13,7 @@ import com.zinno.sensortag.ble.BleActionsReceiver;
 import com.zinno.sensortag.ble.BleServiceListener;
 import com.zinno.sensortag.config.AppConfig;
 
-public class BleServiceBindingActivity extends Activity
+public abstract class BleServiceBindingActivity extends Activity
         implements BleServiceListener,
         ServiceConnection {
     private final static String TAG = BleServiceBindingActivity.class.getSimpleName();
@@ -41,8 +41,9 @@ public class BleServiceBindingActivity extends Activity
     protected void onStart() {
         super.onStart();
 
-        if (AppConfig.REMOTE_BLE_SERVICE)
+        if (AppConfig.REMOTE_BLE_SERVICE) {
             registerReceiver(bleActionsReceiver, BleActionsReceiver.createIntentFilter());
+        }
         final Intent gattServiceIntent = new Intent(this, BleService.class);
         bindService(gattServiceIntent, this, BIND_AUTO_CREATE);
     }
@@ -50,10 +51,12 @@ public class BleServiceBindingActivity extends Activity
     @Override
     protected void onStop() {
         super.onStop();
-        if (bleService != null)
+        if (bleService != null) {
             bleService.getBleManager().disconnect();
-        if (AppConfig.REMOTE_BLE_SERVICE)
+        }
+        if (AppConfig.REMOTE_BLE_SERVICE) {
             unregisterReceiver(bleActionsReceiver);
+        }
         unbindService(this);
     }
 
@@ -89,8 +92,9 @@ public class BleServiceBindingActivity extends Activity
     public void onServiceConnected(ComponentName name, IBinder service) {
         bleService = ((BleService.LocalBinder) service).getService();
         //noinspection PointlessBooleanExpression,ConstantConditions
-        if (!AppConfig.REMOTE_BLE_SERVICE)
+        if (!AppConfig.REMOTE_BLE_SERVICE) {
             bleService.setServiceListener(this);
+        }
         if (!bleService.getBleManager().initialize(getBaseContext())) {
             Log.e(TAG, "Unable to initialize Bluetooth");
             finish();

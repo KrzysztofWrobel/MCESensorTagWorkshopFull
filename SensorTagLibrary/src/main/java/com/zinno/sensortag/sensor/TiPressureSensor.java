@@ -46,8 +46,9 @@ public class TiPressureSensor extends TiSensor<Double> {
 
     @Override
     public String getCharacteristicName(String uuid) {
-        if (UUID_CALIBRATION.equals(uuid))
+        if (UUID_CALIBRATION.equals(uuid)) {
             return getName() + " Calibration";
+        }
         return super.getCharacteristicName(uuid);
     }
 
@@ -55,8 +56,9 @@ public class TiPressureSensor extends TiSensor<Double> {
     public boolean onCharacteristicRead(BluetoothGattCharacteristic c) {
         super.onCharacteristicRead(c);
 
-        if (!c.getUuid().toString().equals(UUID_CALIBRATION))
+        if (!c.getUuid().toString().equals(UUID_CALIBRATION)) {
             return false;
+        }
 
         for (int i = 0; i < 4; ++i) {
             calibration[i] = TiSensorUtils.shortUnsignedAtOffset(c, i * 2);

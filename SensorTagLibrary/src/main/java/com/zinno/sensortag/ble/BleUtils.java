@@ -19,8 +19,9 @@ public class BleUtils {
         // BluetoothAdapter through BluetoothManager.
         final BluetoothManager bluetoothManager =
                 (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
-        if (bluetoothManager == null)
+        if (bluetoothManager == null) {
             return null;
+        }
         return bluetoothManager.getAdapter();
     }
 
@@ -37,8 +38,9 @@ public class BleUtils {
             return STATUS_BLUETOOTH_NOT_AVAILABLE;
         }
 
-        if (adapter.isEnabled())
+        if (adapter.isEnabled()) {
             return STATUS_BLUETOOTH_DISABLED;
+        }
 
         return STATUS_BLE_ENABLED;
     }

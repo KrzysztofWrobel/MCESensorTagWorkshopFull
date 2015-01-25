@@ -106,8 +106,9 @@ public abstract class TiSensor<T> {
 
                 final BluetoothGattCharacteristic dataCharacteristic = getCharacteristic(bluetoothGatt, getDataUUID());
                 final BluetoothGattDescriptor config = dataCharacteristic.getDescriptor(CCC);
-                if (config == null)
+                if (config == null) {
                     return true;
+                }
 
                 // enable/disable locally
                 bluetoothGatt.setCharacteristicNotification(dataCharacteristic, start);

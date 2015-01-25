@@ -20,8 +20,9 @@ public class BleDevicesScanner implements Runnable, BluetoothAdapter.LeScanCallb
     private volatile boolean isScanning = false;
 
     public BleDevicesScanner(BluetoothAdapter adapter, BluetoothAdapter.LeScanCallback callback) {
-        if (adapter == null)
+        if (adapter == null) {
             throw new IllegalArgumentException("Adapter should not be null");
+        }
 
         bluetoothAdapter = adapter;
 
@@ -37,8 +38,9 @@ public class BleDevicesScanner implements Runnable, BluetoothAdapter.LeScanCallb
     }
 
     public synchronized void start() {
-        if (isScanning())
+        if (isScanning()) {
             return;
+        }
 
         if (scanThread != null) {
             scanThread.interrupt();
@@ -66,8 +68,9 @@ public class BleDevicesScanner implements Runnable, BluetoothAdapter.LeScanCallb
                     bluetoothAdapter.startLeScan(this);
                 }
 
-                if (scanPeriod > 0)
+                if (scanPeriod > 0) {
                     Thread.sleep(scanPeriod);
+                }
 
                 synchronized (this) {
                     bluetoothAdapter.stopLeScan(this);

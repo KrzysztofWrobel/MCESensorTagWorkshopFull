@@ -66,8 +66,9 @@ public class BleGattExecutor extends BluetoothGattCallback {
     }
 
     public void execute(BluetoothGatt gatt) {
-        if (currentAction != null)
+        if (currentAction != null) {
             return;
+        }
 
         boolean next = !queue.isEmpty();
         while (next) {
@@ -86,8 +87,9 @@ public class BleGattExecutor extends BluetoothGattCallback {
         super.onDescriptorWrite(gatt, descriptor, status);
 
         // wait for onCharacteristicWrite for write action before execution of any other actions
-        if (currentAction != null && currentAction.getType() == ServiceAction.ActionType.WRITE)
+        if (currentAction != null && currentAction.getType() == ServiceAction.ActionType.WRITE) {
             return;
+        }
 
         currentAction = null;
         execute(gatt);
@@ -106,8 +108,9 @@ public class BleGattExecutor extends BluetoothGattCallback {
                                      BluetoothGattCharacteristic characteristic,
                                      int status) {
         // wait for onCharacteristicWrite for write action before execution of any other actions
-        if (currentAction != null && currentAction.getType() == ServiceAction.ActionType.WRITE)
+        if (currentAction != null && currentAction.getType() == ServiceAction.ActionType.WRITE) {
             return;
+        }
 
         currentAction = null;
         execute(gatt);

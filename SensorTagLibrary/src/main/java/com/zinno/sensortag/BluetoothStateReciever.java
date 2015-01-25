@@ -12,8 +12,9 @@ public class BluetoothStateReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (!AppConfig.ENABLE_RECORD_SERVICE)
+        if (!AppConfig.ENABLE_RECORD_SERVICE) {
             return;
+        }
 
         final BluetoothAdapter adapter = BleUtils.getBluetoothAdapter(context);
         final Intent gattServiceIntent = new Intent(context, BleSensorsRecordService.class);

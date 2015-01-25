@@ -113,8 +113,9 @@ public class TiGyroscopeSensor extends TiRangeSensors<float[], Float> {
     public boolean onCharacteristicRead(BluetoothGattCharacteristic c) {
         super.onCharacteristicRead(c);
 
-        if (!c.getUuid().toString().equals(UUID_PERIOD))
+        if (!c.getUuid().toString().equals(UUID_PERIOD)) {
             return false;
+        }
 
         period = TiSensorUtils.shortUnsignedAtOffset(c, 0);
         return true;

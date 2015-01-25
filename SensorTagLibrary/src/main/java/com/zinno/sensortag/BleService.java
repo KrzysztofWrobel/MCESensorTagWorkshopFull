@@ -111,8 +111,9 @@ public class BleService extends Service implements BleServiceListener {
         uiThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (serviceListener != null)
+                if (serviceListener != null) {
                     serviceListener.onConnected();
+                }
             }
         });
     }
@@ -123,8 +124,9 @@ public class BleService extends Service implements BleServiceListener {
         uiThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (serviceListener != null)
+                if (serviceListener != null) {
                     serviceListener.onDisconnected();
+                }
             }
         });
     }
@@ -136,8 +138,9 @@ public class BleService extends Service implements BleServiceListener {
         uiThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (serviceListener != null)
+                if (serviceListener != null) {
                     serviceListener.onServiceDiscovered();
+                }
             }
         });
     }
@@ -151,20 +154,23 @@ public class BleService extends Service implements BleServiceListener {
         intent.putExtra(EXTRA_TEXT, text);
         intent.putExtra(EXTRA_DATA, data);
 
-        if (AppConfig.REMOTE_BLE_SERVICE)
+        if (AppConfig.REMOTE_BLE_SERVICE) {
             sendBroadcast(intent);
+        }
         uiThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (serviceListener != null)
+                if (serviceListener != null) {
                     serviceListener.onDataAvailable(serviceUuid, characteristicUuid, text, data);
+                }
             }
         });
     }
 
     private void broadcastUpdate(final String action) {
-        if (!AppConfig.REMOTE_BLE_SERVICE)
+        if (!AppConfig.REMOTE_BLE_SERVICE) {
             return;
+        }
 
         final Intent intent = new Intent(action);
         sendBroadcast(intent);

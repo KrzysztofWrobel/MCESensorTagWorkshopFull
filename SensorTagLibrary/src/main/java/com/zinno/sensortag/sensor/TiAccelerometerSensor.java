@@ -47,8 +47,9 @@ public class TiAccelerometerSensor extends TiRangeSensors<float[], Float> {
 
     @Override
     public boolean isConfigUUID(String uuid) {
-        if (uuid.equals(UUID_PERIOD))
+        if (uuid.equals(UUID_PERIOD)) {
             return true;
+        }
         return super.isConfigUUID(uuid);
     }
 
@@ -99,8 +100,9 @@ public class TiAccelerometerSensor extends TiRangeSensors<float[], Float> {
     public boolean onCharacteristicRead(BluetoothGattCharacteristic c) {
         super.onCharacteristicRead(c);
 
-        if (!c.getUuid().toString().equals(UUID_PERIOD))
+        if (!c.getUuid().toString().equals(UUID_PERIOD)) {
             return false;
+        }
 
         period = TiSensorUtils.shortUnsignedAtOffset(c, 0);
         return true;

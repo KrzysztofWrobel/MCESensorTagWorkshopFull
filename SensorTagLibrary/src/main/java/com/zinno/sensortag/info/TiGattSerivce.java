@@ -29,8 +29,9 @@ public class TiGattSerivce extends TiInfoService {
 
     @Override
     public String getCharacteristicName(String uuid) {
-        if (!CHARACTERISTIC_MAP.containsKey(uuid))
+        if (!CHARACTERISTIC_MAP.containsKey(uuid)) {
             return "Unknown";
+        }
         return CHARACTERISTIC_MAP.get(uuid);
     }
 }

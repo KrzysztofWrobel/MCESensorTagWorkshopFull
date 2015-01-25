@@ -67,8 +67,9 @@ public class BleSensorsRecordService extends BleService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (scanner == null)
+        if (scanner == null) {
             return super.onStartCommand(intent, flags, startId);
+        }
         Log.d(TAG, "Service started");
         scanner.start();
         return super.onStartCommand(intent, flags, startId);
@@ -79,8 +80,9 @@ public class BleSensorsRecordService extends BleService {
         super.onDestroy();
         Log.d(TAG, "Service stopped");
         setServiceListener(null);
-        if (scanner != null)
+        if (scanner != null) {
             scanner.stop();
+        }
     }
 
     @Override
