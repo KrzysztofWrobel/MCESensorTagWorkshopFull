@@ -49,16 +49,18 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
             case MAGNETOMETER:
                 break;
             case ACCELEROMETER:
+                intent = new Intent(this.context, DiceActivity.class);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "Dice Sensor");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "BC:6A:29:AB:81:A9");
                 break;
             case GYROSCOPE:
                 intent = new Intent(this.context, GyroscopeActivity.class);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "SensorTag");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "34:B1:F7:D5:04:01");
                 break;
         }
 
         if (intent != null) {
-            intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "SensorTag");
-            intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "34:B1:F7:D5:04:01");
-
             context.startActivity(intent);
         }
     }
