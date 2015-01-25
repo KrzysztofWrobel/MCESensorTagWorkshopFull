@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.joanzapata.android.iconify.Iconify;
+import com.zinno.sensortag.BleServiceBindingActivity;
 
 public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryViewHolder> {
     Context context;
@@ -55,6 +56,9 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
         }
 
         if (intent != null) {
+            intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "SensorTag");
+            intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "34:B1:F7:D5:04:01");
+
             context.startActivity(intent);
         }
     }
