@@ -1,19 +1,19 @@
 package com.zinno.sensortag;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.zinno.sensortag.ble.BleActionsReceiver;
 import com.zinno.sensortag.ble.BleServiceListener;
 import com.zinno.sensortag.config.AppConfig;
 
-public abstract class BleServiceBindingActivity extends Activity
+public abstract class BleServiceBindingActivity extends ActionBarActivity
         implements BleServiceListener,
         ServiceConnection {
     private final static String TAG = BleServiceBindingActivity.class.getSimpleName();
