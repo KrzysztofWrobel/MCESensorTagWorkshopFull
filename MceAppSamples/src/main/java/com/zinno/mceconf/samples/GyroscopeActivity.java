@@ -1,23 +1,41 @@
 package com.zinno.mceconf.samples;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
+import com.zinno.sensortag.BleService;
+import com.zinno.sensortag.BleServiceBindingActivity;
+import com.zinno.sensortag.sensor.TiGyroscopeSensor;
+import com.zinno.sensortag.sensor.TiPeriodicalSensor;
+import com.zinno.sensortag.sensor.TiSensor;
+import com.zinno.sensortag.sensor.TiSensors;
 
-public class GyroscopeActivity extends ActionBarActivity {
+public class GyroscopeActivity extends BleServiceBindingActivity {
+    private static final String TAG = GyroscopeActivity.class.getSimpleName();
+
+    TiSensor<?> sensor;
+
+    boolean sensorEnabled = false;
+
+    long lastTime = -1;
+    float firstZ = 0f;
+    float rotationZ = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sensor = TiSensors.getSensor(TiGyroscopeSensor.UUID_SERVICE);
+
         setContentView(R.layout.activity_gyroscope);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -25,12 +43,89 @@ public class GyroscopeActivity extends ActionBarActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_gyroscope, menu);
         return true;
+    }
+
+    @Override
+    public void onDisconnected() {
+        finish();
+    }
+
+    @Override
+    public void onServiceDiscovered() {
+        sensorEnabled = true;
+        getBleService().enableSensor(sensor, true);
+
+        if (sensor instanceof TiPeriodicalSensor) {
+            TiPeriodicalSensor periodicalSensor = (TiPeriodicalSensor) sensor;
+            periodicalSensor.setPeriod(periodicalSensor.getMinPeriod());
+            getBleService().getBleManager().updateSensor(sensor);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause");
+
+        BleService bleService = getBleService();
+        if (bleService != null && sensorEnabled) {
+            bleService.enableSensor(sensor, false);
+        }
+
+        super.onPause();
+    }
+
+    @Override
+    public void onDataAvailable(String serviceUuid, String characteristicUUid, String text, byte[] data) {
+        String split[] = text.split("\n");
+        if (split.length != 3) {
+            Log.e(TAG, "onDataAvailable: text split != 3");
+            return;
+        }
+
+        String zStr = split[2];
+
+        split = zStr.split("=");
+        if (split.length != 2) {
+            Log.e(TAG, "onDataAvailable: z value split != 2");
+            return;
+        }
+
+        float z = Float.valueOf(split[1]);
+        Log.d(TAG, "onDataAvailable: z=" + z);
+
+        long currentTime = System.currentTimeMillis();
+
+        if (lastTime == -1) {
+            lastTime = currentTime;
+            firstZ = z;
+            return;
+        }
+
+        // in millis
+        float deltaTime = currentTime - lastTime;
+        Log.d(TAG, "deltaTime=" + deltaTime);
+
+        Log.d(TAG, "z-lastZ=" + (z - firstZ));
+
+        float deltaAngle = (z - firstZ) * (deltaTime / 1000f);
+        Log.d(TAG, "deltaAngle=" + deltaAngle);
+
+        rotationZ += deltaAngle;
+
+        Log.d(TAG, "rotation " + Math.abs(rotationZ) % 360);
+
+        lastTime = currentTime;
     }
 
     @Override
