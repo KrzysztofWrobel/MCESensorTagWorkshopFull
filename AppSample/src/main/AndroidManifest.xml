@@ -54,19 +54,7 @@ limitations under the License.
             android:name=".fusion.SensorFusionActivity"
             android:hardwareAccelerated="false" />
 
-        <service
-            android:name="com.zinno.sensortag.BleService"
-            android:enabled="true" />
-        <service
-            android:name="com.zinno.sensortag.BleSensorsRecordService"
-            android:enabled="true"
-            android:exported="true" />
 
-        <receiver android:name="com.zinno.sensortag.BluetoothStateReciever">
-            <intent-filter>
-                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
-            </intent-filter>
-        </receiver>
 
     </application>
 </manifest>
