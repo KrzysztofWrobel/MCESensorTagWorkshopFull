@@ -1,5 +1,7 @@
 package com.zinno.mceconf.samples;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +10,10 @@ import android.view.ViewGroup;
 import com.joanzapata.android.iconify.Iconify;
 
 public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryViewHolder> {
-    public SamplesListAdapter() {
+    Context context;
+
+    public SamplesListAdapter(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -25,6 +30,33 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
 
         viewHolder.iconTextView.setText(sample.iconId);
         Iconify.addIcons(viewHolder.iconTextView);
+
+        viewHolder.iconTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSampleClick(sample);
+            }
+        });
+    }
+
+    private void onSampleClick(Samples sample) {
+        Intent intent = null;
+
+        switch (sample) {
+            case HELLOWORLD:
+                break;
+            case MAGNETOMETER:
+                break;
+            case ACCELEROMETER:
+                break;
+            case GYROSCOPE:
+                intent = new Intent(this.context, GyroscopeActivity.class);
+                break;
+        }
+
+        if (intent != null) {
+            context.startActivity(intent);
+        }
     }
 
     @Override

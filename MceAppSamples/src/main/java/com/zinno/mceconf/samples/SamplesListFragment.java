@@ -25,7 +25,7 @@ public class SamplesListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        samplesListAdapter = new SamplesListAdapter();
+        samplesListAdapter = new SamplesListAdapter(getActivity());
     }
 
     @Override
