@@ -1,12 +1,11 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.zinno.sensortag.BleServiceBindingActivity;
-
-public class MainActivity extends BleServiceBindingActivity {
+public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
