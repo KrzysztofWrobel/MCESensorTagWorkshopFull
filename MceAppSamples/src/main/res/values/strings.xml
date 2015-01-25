@@ -13,4 +13,5 @@
     <string name="accelerometer_sample_icon">{fa-rocket}</string>
     <string name="gyroscope_sample_icon">{fa-arrows}</string>
     <string name="title_activity_gyroscope">GyroscopeActivity</string>
+    <string name="title_activity_dice">DiceActivity</string>
 </resources>
