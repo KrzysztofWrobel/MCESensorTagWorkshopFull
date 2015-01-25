@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iconTextView"
+        android:shadowColor="#22000000"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="1"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/icon_size"
+        android:textColor="@android:color/white" />
+
     <TextView
+        android:visibility="gone"
         android:id="@+id/nameTextView"
-        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/iconTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>

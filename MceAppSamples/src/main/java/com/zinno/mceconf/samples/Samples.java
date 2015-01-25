@@ -1,11 +1,15 @@
 package com.zinno.mceconf.samples;
 
 public enum Samples {
-    HELLOWORLD("Helloworld Sample");
+    HELLOWORLD(R.string.hello_world_sample_name, R.string.hello_world_sample_icon),
+    MAGNETOMETER(R.string.magnetometer_sample_name, R.string.magnetometer_sample_icon),
+    ACCELEROMETER(R.string.accelerometer_sample_name, R.string.accelerometer_sample_icon),
+    GYROSCOPE(R.string.gyroscope_sample_name, R.string.gyroscope_sample_icon);
 
-    String name;
+    int nameId, iconId;
 
-    Samples(String name) {
-        this.name = name;
+    Samples(int nameId, int iconId) {
+        this.nameId = nameId;
+        this.iconId = iconId;
     }
 }

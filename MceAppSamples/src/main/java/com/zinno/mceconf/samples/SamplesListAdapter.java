@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.joanzapata.android.iconify.Iconify;
+
 public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryViewHolder> {
     public SamplesListAdapter() {
     }
@@ -18,7 +20,11 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
     @Override
     public void onBindViewHolder(SamplesListEntryViewHolder viewHolder, int position) {
         final Samples sample = Samples.values()[position];
-        viewHolder.nameTextView.setText(sample.name);
+
+        viewHolder.nameTextView.setText(sample.nameId);
+
+        viewHolder.iconTextView.setText(sample.iconId);
+        Iconify.addIcons(viewHolder.iconTextView);
     }
 
     @Override
