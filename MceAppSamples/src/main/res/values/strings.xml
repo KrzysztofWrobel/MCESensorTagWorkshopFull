@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">MCEConf App</string>
     <string name="title_activity_main">MCEConf App Samples</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="dice_state">Dice state: </string>
     <string name="action_settings">Settings</string>
     <string name="hello_world_sample_icon">{fa-coffee}</string>
     <string name="hello_world_sample_name">Hello world</string>
