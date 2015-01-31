@@ -89,19 +89,19 @@ public abstract class BleServiceBindingActivity extends ActionBarActivity
     }
 
     @Override
-    public void onConnected() {
+    public void onConnected(String deviceAddress) {
     }
 
     @Override
-    public void onDisconnected() {
+    public void onDisconnected(String deviceAddress) {
     }
 
     @Override
-    public void onServiceDiscovered() {
+    public void onServiceDiscovered(String deviceAddress) {
     }
 
     @Override
-    public void onDataAvailable(String serviceUuid, String characteristicUUid, String text, byte[] data) {
+    public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
     }
 
     @Override

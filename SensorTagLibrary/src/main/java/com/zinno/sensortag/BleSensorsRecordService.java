@@ -88,25 +88,25 @@ public class BleSensorsRecordService extends BleService {
     }
 
     @Override
-    public void onConnected() {
+    public void onConnected(String deviceAddress) {
         Log.d(TAG, "Connected");
     }
 
     @Override
-    public void onDisconnected() {
+    public void onDisconnected(String deviceAddress) {
         Log.d(TAG, "Disconnected");
         scanner.start();
     }
 
     @Override
-    public void onServiceDiscovered() {
+    public void onServiceDiscovered(String deviceAddress) {
         Log.d(TAG, "Service discovered");
         //TODO cant be field in service
         enableSensor(lastDiscoveredBleAddress, sensorToRead, true);
     }
 
     @Override
-    public void onDataAvailable(String serviceUuid, String characteristicUUid, String text, byte[] data) {
+    public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
         Log.d(TAG, "Data='" + text + "'");
         //TODO: put your record code here. Please note that it is not main thread.
     }

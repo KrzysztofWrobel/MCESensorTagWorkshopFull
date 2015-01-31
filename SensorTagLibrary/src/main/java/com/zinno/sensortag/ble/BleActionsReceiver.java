@@ -29,18 +29,19 @@ public class BleActionsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
+        String deviceAddress = intent.getStringExtra(BleService.EXTRA_DEVICE_ADDRESS);
         if (BleService.ACTION_GATT_CONNECTED.equals(action)) {
-            bleServiceListener.onConnected();
+            bleServiceListener.onConnected(deviceAddress);
         } else if (BleService.ACTION_GATT_DISCONNECTED.equals(action)) {
-            bleServiceListener.onDisconnected();
+            bleServiceListener.onDisconnected(deviceAddress);
         } else if (BleService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-            bleServiceListener.onServiceDiscovered();
+            bleServiceListener.onServiceDiscovered(deviceAddress);
         } else if (BleService.ACTION_DATA_AVAILABLE.equals(action)) {
             final String serviceUuid = intent.getStringExtra(BleService.EXTRA_SERVICE_UUID);
             final String characteristicUUid = intent.getStringExtra(BleService.EXTRA_CHARACTERISTIC_UUID);
             final String text = intent.getStringExtra(BleService.EXTRA_TEXT);
             final byte[] data = intent.getExtras().getByteArray(BleService.EXTRA_DATA);
-            bleServiceListener.onDataAvailable(serviceUuid, characteristicUUid, text, data);
+            bleServiceListener.onDataAvailable(deviceAddress, serviceUuid, characteristicUUid, text, data);
         }
     }
 

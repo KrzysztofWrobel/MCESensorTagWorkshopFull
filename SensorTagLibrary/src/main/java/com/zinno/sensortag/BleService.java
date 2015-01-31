@@ -32,6 +32,7 @@ public class BleService extends Service implements BleServiceListener {
     public final static String EXTRA_CHARACTERISTIC_UUID = INTENT_PREFIX + ".EXTRA_CHARACTERISTIC_UUI";
     public final static String EXTRA_DATA = INTENT_PREFIX + ".EXTRA_DATA";
     public final static String EXTRA_TEXT = INTENT_PREFIX + ".EXTRA_TEXT";
+    public final static String EXTRA_DEVICE_ADDRESS = INTENT_PREFIX + ".EXTRA_DEVICE_ADDRESS";
 
     public class LocalBinder extends Binder {
         public BleService getService() {
@@ -106,47 +107,47 @@ public class BleService extends Service implements BleServiceListener {
     }
 
     @Override
-    public void onConnected() {
+    public void onConnected(final String deviceAddress) {
         broadcastUpdate(ACTION_GATT_CONNECTED);
         uiThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (serviceListener != null) {
-                    serviceListener.onConnected();
+                    serviceListener.onConnected(deviceAddress);
                 }
             }
         });
     }
 
     @Override
-    public void onDisconnected() {
+    public void onDisconnected(final String deviceAddress) {
         broadcastUpdate(ACTION_GATT_DISCONNECTED);
         uiThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (serviceListener != null) {
-                    serviceListener.onDisconnected();
+                    serviceListener.onDisconnected(deviceAddress);
                 }
             }
         });
     }
 
     @Override
-    public void onServiceDiscovered() {
+    public void onServiceDiscovered(final String deviceAddress) {
         broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
 
         uiThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (serviceListener != null) {
-                    serviceListener.onServiceDiscovered();
+                    serviceListener.onServiceDiscovered(deviceAddress);
                 }
             }
         });
     }
 
     @Override
-    public void onDataAvailable(final String serviceUuid, final String characteristicUuid,
+    public void onDataAvailable(final String deviceAddress, final String serviceUuid, final String characteristicUuid,
                                 final String text, final byte[] data) {
         final Intent intent = new Intent(ACTION_DATA_AVAILABLE);
         intent.putExtra(EXTRA_SERVICE_UUID, serviceUuid);
@@ -161,7 +162,7 @@ public class BleService extends Service implements BleServiceListener {
             @Override
             public void run() {
                 if (serviceListener != null) {
-                    serviceListener.onDataAvailable(serviceUuid, characteristicUuid, text, data);
+                    serviceListener.onDataAvailable(deviceAddress, serviceUuid, characteristicUuid, text, data);
                 }
             }
         });

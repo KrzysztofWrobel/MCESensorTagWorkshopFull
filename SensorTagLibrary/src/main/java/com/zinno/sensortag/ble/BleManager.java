@@ -98,6 +98,7 @@ public class BleManager implements BleExecutorListener {
         BluetoothGatt gatt = device.connectGatt(context, false, executor);
         Log.d(TAG, "Trying to create a new connection.");
         adressToGattHashMap.put(address, gatt);
+        gattToAdressHashMap.put(gatt, address);
         connectionState = STATE_CONNECTING;
         return true;
     }
@@ -197,6 +198,7 @@ public class BleManager implements BleExecutorListener {
 
     @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+        String deviceAddress = gattToAdressHashMap.get(gatt);
         if (newState == BluetoothProfile.STATE_CONNECTED) {
             connectionState = STATE_CONNECTED;
             Log.i(TAG, "Connected to GATT server.");
@@ -205,14 +207,14 @@ public class BleManager implements BleExecutorListener {
                     gatt.discoverServices());
 
             if (serviceListener != null) {
-                serviceListener.onConnected();
+                serviceListener.onConnected(deviceAddress);
             }
         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
             connectionState = STATE_DISCONNECTED;
             Log.i(TAG, "Disconnected from GATT server.");
 
             if (serviceListener != null) {
-                serviceListener.onDisconnected();
+                serviceListener.onDisconnected(deviceAddress);
             }
         }
     }
@@ -235,9 +237,10 @@ public class BleManager implements BleExecutorListener {
 
     @Override
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+        String deviceAddress = gattToAdressHashMap.get(gatt);
         if (status == BluetoothGatt.GATT_SUCCESS) {
             if (serviceListener != null) {
-                serviceListener.onServiceDiscovered();
+                serviceListener.onServiceDiscovered(deviceAddress);
             }
         } else {
             Log.w(TAG, "onServicesDiscovered received: " + status);
@@ -258,16 +261,18 @@ public class BleManager implements BleExecutorListener {
             }
         }
 
-        broadcastUpdate(characteristic);
+        String deviceAddress = gattToAdressHashMap.get(gatt);
+        broadcastUpdate(deviceAddress, characteristic);
     }
 
     @Override
     public void onCharacteristicChanged(BluetoothGatt gatt,
                                         BluetoothGattCharacteristic characteristic) {
-        broadcastUpdate(characteristic);
+        String deviceAddress = gattToAdressHashMap.get(gatt);
+        broadcastUpdate(deviceAddress, characteristic);
     }
 
-    private void broadcastUpdate(BluetoothGattCharacteristic characteristic) {
+    private void broadcastUpdate(String deviceAddress, BluetoothGattCharacteristic characteristic) {
         final String serviceUuid = characteristic.getService().getUuid().toString();
         final String characteristicUuid = characteristic.getUuid().toString();
         final byte[] data;
@@ -292,7 +297,7 @@ public class BleManager implements BleExecutorListener {
         }
 
         if (serviceListener != null) {
-            serviceListener.onDataAvailable(serviceUuid, characteristicUuid, text, data);
+            serviceListener.onDataAvailable(deviceAddress, serviceUuid, characteristicUuid, text, data);
         }
     }
 }
