@@ -11,13 +11,21 @@ import static android.bluetooth.BluetoothGattCharacteristic.FORMAT_UINT8;
  */
 public class TiKeysSensor extends TiSensor<TiKeysSensor.SimpleKeysStatus> {
 
-    private static final String UUID_SERVICE = "0000ffe0-0451-4000-b000-000000000000";
+    public static final String UUID_SERVICE = "0000ffe0-0451-4000-b000-000000000000";
     private static final String UUID_DATA = "0000ffe1-0451-4000-b000-000000000000";
     private static final String UUID_CONFIG = null;
 
     public enum SimpleKeysStatus {
         // Warning: The order in which these are defined matters.
         OFF_OFF, OFF_ON, ON_OFF, ON_ON;
+
+        public boolean leftPressed() {
+            return this == ON_OFF || this == ON_ON;
+        }
+
+        public boolean rightPressed() {
+            return this == OFF_ON || this == ON_ON;
+        }
     }
 
     TiKeysSensor() {
