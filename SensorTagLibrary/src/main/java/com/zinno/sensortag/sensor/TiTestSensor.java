@@ -1,5 +1,6 @@
 package com.zinno.sensortag.sensor;
 
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import com.zinno.sensortag.ble.BleGattExecutor;
@@ -43,12 +44,12 @@ public class TiTestSensor extends TiSensor<Void> {
     }
 
     @Override
-    public BleGattExecutor.ServiceAction[] enable(boolean enable) {
+    public BleGattExecutor.ServiceAction[] enable(BluetoothGatt gatt, boolean enable) {
         return new BleGattExecutor.ServiceAction[0];
     }
 
     @Override
-    public BleGattExecutor.ServiceAction notify(boolean start) {
+    public BleGattExecutor.ServiceAction notify(BluetoothGatt gatt, boolean start) {
         return BleGattExecutor.ServiceAction.NULL;
     }
 

@@ -1,5 +1,6 @@
 package com.zinno.sensortag.sensor;
 
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import com.zinno.sensortag.ble.BleGattExecutor;
@@ -91,8 +92,8 @@ public class TiMagnetometerSensor extends TiRangeSensors<float[], Float> {
     }
 
     @Override
-    public BleGattExecutor.ServiceAction update() {
-        return write(UUID_PERIOD, new byte[]{(byte) period});
+    public BleGattExecutor.ServiceAction update(BluetoothGatt gatt) {
+        return write(gatt, UUID_PERIOD, new byte[]{(byte) period});
     }
 
     @Override

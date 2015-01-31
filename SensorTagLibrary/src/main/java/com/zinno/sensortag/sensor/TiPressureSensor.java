@@ -1,5 +1,6 @@
 package com.zinno.sensortag.sensor;
 
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import com.zinno.sensortag.ble.BleGattExecutor;
@@ -75,16 +76,16 @@ public class TiPressureSensor extends TiSensor<Double> {
     }
 
     @Override
-    public BleGattExecutor.ServiceAction[] enable(boolean enable) {
+    public BleGattExecutor.ServiceAction[] enable(BluetoothGatt gatt, boolean enable) {
         if (enable) {
             return new BleGattExecutor.ServiceAction[]{
-                    write(UUID_CONFIG, CALIBRATION_DATA),
-                    read(UUID_CALIBRATION),
-                    write(getConfigUUID(), getConfigValues(enable)),
-                    notify(enable)
+                    write(gatt, UUID_CONFIG, CALIBRATION_DATA),
+                    read(gatt, UUID_CALIBRATION),
+                    write(gatt, getConfigUUID(), getConfigValues(enable)),
+                    notify(gatt, enable)
             };
         } else {
-            return super.enable(enable);
+            return super.enable(gatt, enable);
         }
     }
 

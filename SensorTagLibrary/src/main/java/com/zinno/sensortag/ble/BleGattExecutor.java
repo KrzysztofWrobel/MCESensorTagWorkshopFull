@@ -16,6 +16,8 @@ import java.util.LinkedList;
 public class BleGattExecutor extends BluetoothGattCallback {
 
     public static abstract class ServiceAction {
+
+
         public enum ActionType {
             NONE,
             READ,
@@ -23,7 +25,7 @@ public class BleGattExecutor extends BluetoothGattCallback {
             WRITE
         }
 
-        public static final ServiceAction NULL = new ServiceAction(ActionType.NONE) {
+        public static final ServiceAction NULL = new ServiceAction(null, ActionType.NONE) {
             @Override
             public boolean execute(BluetoothGatt bluetoothGatt) {
                 // it is null action. do nothing.
@@ -33,8 +35,15 @@ public class BleGattExecutor extends BluetoothGattCallback {
 
         private final ActionType type;
 
-        public ServiceAction(ActionType type) {
+        private BluetoothGatt gatt;
+
+        public ServiceAction(BluetoothGatt gatt, ActionType type) {
+            this.gatt = gatt;
             this.type = type;
+        }
+
+        public BluetoothGatt getGatt() {
+            return gatt;
         }
 
         public ActionType getType() {
@@ -54,18 +63,18 @@ public class BleGattExecutor extends BluetoothGattCallback {
     private final LinkedList<BleGattExecutor.ServiceAction> queue = new LinkedList<ServiceAction>();
     private volatile ServiceAction currentAction;
 
-    public void update(final TiSensor sensor) {
-        queue.add(sensor.update());
+    public void update(BluetoothGatt gatt, final TiSensor sensor) {
+        queue.add(sensor.update(gatt));
     }
 
-    public void enable(TiSensor sensor, boolean enable) {
-        final ServiceAction[] actions = sensor.enable(enable);
+    public void enable(BluetoothGatt gatt, TiSensor sensor, boolean enable) {
+        final ServiceAction[] actions = sensor.enable(gatt, enable);
         for (ServiceAction action : actions) {
             this.queue.add(action);
         }
     }
 
-    public void execute(BluetoothGatt gatt) {
+    public void executeNextAction() {
         if (currentAction != null) {
             return;
         }
@@ -74,7 +83,7 @@ public class BleGattExecutor extends BluetoothGattCallback {
         while (next) {
             final BleGattExecutor.ServiceAction action = queue.pop();
             currentAction = action;
-            if (!action.execute(gatt))
+            if (!action.execute(currentAction.getGatt()))
                 break;
 
             currentAction = null;
@@ -92,7 +101,7 @@ public class BleGattExecutor extends BluetoothGattCallback {
         }
 
         currentAction = null;
-        execute(gatt);
+        executeNextAction();
     }
 
     @Override
@@ -100,7 +109,7 @@ public class BleGattExecutor extends BluetoothGattCallback {
         super.onCharacteristicWrite(gatt, characteristic, status);
 
         currentAction = null;
-        execute(gatt);
+        executeNextAction();
     }
 
     @Override
@@ -113,13 +122,17 @@ public class BleGattExecutor extends BluetoothGattCallback {
         }
 
         currentAction = null;
-        execute(gatt);
+        executeNextAction();
     }
 
     @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-            queue.clear();
+            for (ServiceAction serviceAction : queue) {
+                if (serviceAction.gatt.equals(gatt)) {
+                    queue.remove(serviceAction);
+                }
+            }
         }
     }
 }

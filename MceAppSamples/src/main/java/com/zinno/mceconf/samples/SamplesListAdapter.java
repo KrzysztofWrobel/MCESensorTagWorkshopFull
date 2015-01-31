@@ -66,8 +66,8 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
                 deviceNames.add("Player 1 pad");
                 deviceNames.add("Player 2 pad");
                 ArrayList<String> deviceAddresses = new ArrayList<>();
-                deviceAddresses.add("BC:6A:29:AB:45:79");
                 deviceAddresses.add("BC:6A:29:AB:81:A9");
+                deviceAddresses.add("BC:6A:29:AB:45:79");
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAMES, deviceNames);
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESSES, deviceAddresses);
                 break;

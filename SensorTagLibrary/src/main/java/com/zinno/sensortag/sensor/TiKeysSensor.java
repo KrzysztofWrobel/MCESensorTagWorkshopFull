@@ -1,5 +1,6 @@
 package com.zinno.sensortag.sensor;
 
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import com.zinno.sensortag.ble.BleGattExecutor;
@@ -55,9 +56,9 @@ public class TiKeysSensor extends TiSensor<TiKeysSensor.SimpleKeysStatus> {
     }
 
     @Override
-    public BleGattExecutor.ServiceAction[] enable(boolean enable) {
+    public BleGattExecutor.ServiceAction[] enable(BluetoothGatt gatt, boolean enable) {
         return new BleGattExecutor.ServiceAction[]{
-                notify(enable)
+                notify(gatt, enable)
         };
     }
 

@@ -155,8 +155,8 @@ public class BleManager implements BleExecutorListener {
                 return;
             }
 
-            executor.update(sensor);
-            executor.execute(gatt);
+            executor.update(gatt, sensor);
+            executor.executeNextAction();
         }
     }
 
@@ -176,8 +176,8 @@ public class BleManager implements BleExecutorListener {
             return;
         }
 
-        executor.enable(sensor, enabled);
-        executor.execute(gatt);
+        executor.enable(gatt, sensor, enabled);
+        executor.executeNextAction();
     }
 
     /**
