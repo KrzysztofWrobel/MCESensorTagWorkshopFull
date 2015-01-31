@@ -61,7 +61,10 @@ public class RunningButtonGameActivity extends BleServiceBindingActivity {
     public void onServiceDiscovered() {
         Log.d(TAG, "onServiceDiscovered");
 
-        getBleService().enableSensor(buttonSensor, true);
+        for (String address : getDeviceAddresses()) {
+            getBleService().enableSensor(address, buttonSensor, true);
+        }
+
     }
 
     @Override

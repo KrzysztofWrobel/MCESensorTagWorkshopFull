@@ -35,10 +35,13 @@
         </activity>
         <activity
             android:name=".GyroscopeActivity"
-            android:label="@string/title_activity_gyroscope"></activity>
+            android:label="@string/title_activity_gyroscope" />
         <activity
             android:name=".DiceActivity"
-            android:label="@string/title_activity_dice"></activity>
+            android:label="@string/title_activity_dice" />
+        <activity
+            android:name=".RunningButtonGameActivity"
+            android:label="@string/title_activity_running_button_game" />
     </application>
 
 </manifest>

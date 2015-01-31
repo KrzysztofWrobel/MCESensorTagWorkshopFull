@@ -8,10 +8,13 @@
     <string name="hello_world_sample_name">Hello world</string>
     <string name="magnetometer_sample_name">Magnetometer</string>
     <string name="accelerometer_sample_name">Accelerometer</string>
+    <string name="button_game_sample_name">Button Game</string>
     <string name="gyroscope_sample_name">Gyroscope</string>
     <string name="magnetometer_sample_icon">{fa-magnet}</string>
     <string name="accelerometer_sample_icon">{fa-rocket}</string>
+    <string name="button_game_sample_icon">{fa-gamepad}</string>
     <string name="gyroscope_sample_icon">{fa-arrows}</string>
     <string name="title_activity_gyroscope">GyroscopeActivity</string>
     <string name="title_activity_dice">DiceActivity</string>
+    <string name="title_activity_running_button_game">Running Buttons Game</string>
 </resources>

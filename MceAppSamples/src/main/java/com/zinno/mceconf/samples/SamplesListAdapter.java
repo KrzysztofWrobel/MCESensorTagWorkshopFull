@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.joanzapata.android.iconify.Iconify;
 import com.zinno.sensortag.BleServiceBindingActivity;
 
+import java.util.ArrayList;
+
 public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryViewHolder> {
     Context context;
 
@@ -52,6 +54,18 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
                 intent = new Intent(this.context, DiceActivity.class);
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "Dice Sensor");
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "BC:6A:29:AB:81:A9");
+                break;
+
+            case BUTTON_GAME:
+                intent = new Intent(this.context, RunningButtonGameActivity.class);
+                ArrayList<String> deviceNames = new ArrayList<>();
+                deviceNames.add("Player 1 pad");
+                deviceNames.add("Player 2 pad");
+                ArrayList<String> deviceAddresses = new ArrayList<>();
+                deviceAddresses.add("BC:6A:29:AB:45:79");
+                deviceAddresses.add("BC:6A:29:AB:81:A9");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAMES, deviceNames);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESSES, deviceAddresses);
                 break;
             case GYROSCOPE:
                 intent = new Intent(this.context, GyroscopeActivity.class);
