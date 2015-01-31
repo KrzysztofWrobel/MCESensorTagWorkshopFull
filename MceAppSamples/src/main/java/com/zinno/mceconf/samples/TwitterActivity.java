@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.zinno.sensortag.BleService;
 import com.zinno.sensortag.BleServiceBindingActivity;
 import com.zinno.sensortag.info.TiInfoService;
-import com.zinno.sensortag.sensor.TiGyroscopeSensor;
 import com.zinno.sensortag.sensor.TiKeysSensor;
 import com.zinno.sensortag.sensor.TiSensor;
 import com.zinno.sensortag.sensor.TiSensors;
@@ -18,7 +17,7 @@ import butterknife.InjectView;
 public class TwitterActivity extends BleServiceBindingActivity {
     private static final String TAG = TwitterActivity.class.getSimpleName();
 
-    TiSensor<?> keysSensor, gyroscopeSensor;
+    TiSensor<?> keysSensor;
 
     boolean sensorEnabled = false;
 
@@ -35,10 +34,8 @@ public class TwitterActivity extends BleServiceBindingActivity {
 
 //        infoService = TiInfoServices.getService(TiKeysSensor.UUID_SERVICE);
         keysSensor = TiSensors.getSensor(TiKeysSensor.UUID_SERVICE);
-        gyroscopeSensor = TiSensors.getSensor(TiGyroscopeSensor.UUID_SERVICE);
 
         Log.d(TAG, "keysSensor=" + keysSensor);
-        Log.d(TAG, "gyroscopeSensor=" + gyroscopeSensor);
 
         setContentView(R.layout.activity_twitter);
 
@@ -58,7 +55,7 @@ public class TwitterActivity extends BleServiceBindingActivity {
 //        Log.d(TAG, "XXX gyroscopeSensor=" + gyroscopeSensor);
 
         Log.d(TAG, "XXX keysSensor=" + keysSensor);
-        getBleService().enableSensor(getDeviceName(), keysSensor, true);
+        getBleService().enableSensor(getDeviceAddress(), keysSensor, true);
 
 //        sensor.notify(true);
 
@@ -80,8 +77,7 @@ public class TwitterActivity extends BleServiceBindingActivity {
     protected void onPause() {
         BleService bleService = getBleService();
         if (bleService != null && sensorEnabled) {
-            bleService.enableSensor(getDeviceName(), gyroscopeSensor, false);
-            bleService.enableSensor(getDeviceName(), keysSensor, false);
+            bleService.enableSensor(getDeviceAddress(), keysSensor, false);
         }
 
         super.onPause();

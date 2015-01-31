@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.zinno.sensortag.BleService;
 import com.zinno.sensortag.BleServiceBindingActivity;
 import com.zinno.sensortag.MathUtils;
 import com.zinno.sensortag.sensor.TiAccelerometerSensor;
@@ -29,6 +30,7 @@ public class DiceActivity extends BleServiceBindingActivity {
 
     @InjectView(R.id.tv_rolled_number)
     public TextView rolledNumberTextView;
+    private boolean sensorEnabled = false;
 
     private enum DiceState {
         ROLLING,
@@ -57,6 +59,10 @@ public class DiceActivity extends BleServiceBindingActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        BleService bleService = getBleService();
+        if (bleService != null && sensorEnabled) {
+            getBleService().enableSensor(getDeviceAddress(), accelerationSensor, true);
+        }
     }
 
     @Override
@@ -68,6 +74,7 @@ public class DiceActivity extends BleServiceBindingActivity {
 
     @Override
     public void onServiceDiscovered() {
+        sensorEnabled = true;
         Log.d(TAG, "onServiceDiscovered");
 
         getBleService().enableSensor(getDeviceAddress(), accelerationSensor, true);

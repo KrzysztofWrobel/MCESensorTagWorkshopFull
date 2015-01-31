@@ -2,9 +2,10 @@ package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.zinno.sensortag.BleService;
 import com.zinno.sensortag.BleServiceBindingActivity;
 import com.zinno.sensortag.sensor.TiKeysSensor;
 import com.zinno.sensortag.sensor.TiSensor;
@@ -30,11 +31,13 @@ public class RunningButtonGameActivity extends BleServiceBindingActivity {
     @InjectView(R.id.tv_race_summary)
     public TextView raceSummaryTextView;
 
-    @InjectView(R.id.pb_player_one)
-    public ProgressBar player1StatusProgressBar;
+    @InjectView(R.id.sb_player_one)
+    public SeekBar player1StatusSeekBar;
 
-    @InjectView(R.id.pb_player_two)
-    public ProgressBar player2StatusProgressBar;
+    @InjectView(R.id.sb_player_two)
+    public SeekBar player2StatusSeekBar;
+
+    private boolean sensorEnabled;
 
 
     @Override
@@ -55,10 +58,18 @@ public class RunningButtonGameActivity extends BleServiceBindingActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        BleService bleService = getBleService();
+        if (bleService != null && sensorEnabled) {
+            for (String address : getDeviceAddresses()) {
+                getBleService().enableSensor(address, buttonSensor, true);
+            }
+        }
     }
 
     @Override
     public void onServiceDiscovered() {
+        sensorEnabled = true;
         Log.d(TAG, "onServiceDiscovered");
 
         for (String address : getDeviceAddresses()) {
