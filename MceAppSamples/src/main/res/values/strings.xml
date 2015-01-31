@@ -4,8 +4,6 @@
     <string name="title_activity_main">MCEConf App Samples</string>
     <string name="dice_state">Dice state: </string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world_sample_icon">{fa-coffee}</string>
-    <string name="hello_world_sample_name">Hello world</string>
     <string name="magnetometer_sample_name">Magnetometer</string>
     <string name="accelerometer_sample_name">Accelerometer</string>
     <string name="button_game_sample_name">Button Game</string>
@@ -17,4 +15,7 @@
     <string name="title_activity_gyroscope">GyroscopeActivity</string>
     <string name="title_activity_dice">DiceActivity</string>
     <string name="title_activity_running_button_game">Running Buttons Game</string>
+    <string name="twitter_sample_name">Morsetwitt</string>
+    <string name="twitter_sample_icon">{fa-twitter}</string>
+    <string name="title_activity_twitter">Twitter Activity</string>
 </resources>
