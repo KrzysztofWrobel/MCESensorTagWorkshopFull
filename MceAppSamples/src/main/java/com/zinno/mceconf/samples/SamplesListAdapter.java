@@ -44,7 +44,11 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
         Intent intent = null;
 
         switch (sample) {
-            case HELLOWORLD:
+            case TWITTER:
+                intent = new Intent(this.context, TwitterActivity.class);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "Button Sensor");
+//                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "34:B1:F7:D5:04:01");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "BC:6A:29:AC:7D:10");
                 break;
             case MAGNETOMETER:
                 break;
