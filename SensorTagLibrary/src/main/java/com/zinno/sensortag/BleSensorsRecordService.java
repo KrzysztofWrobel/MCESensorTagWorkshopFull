@@ -20,6 +20,7 @@ public class BleSensorsRecordService extends BleService {
 
     private final TiSensor<?> sensorToRead = TiSensors.getSensor(TiAccelerometerSensor.UUID_SERVICE);
     private BleDevicesScanner scanner;
+    private String lastDiscoveredBleAddress;
 
     @Override
     public void onCreate() {
@@ -57,7 +58,8 @@ public class BleSensorsRecordService extends BleService {
                 Log.d(TAG, "Device discovered: " + device.getName());
                 if (RECORD_DEVICE_NAME.equals(RECORD_DEVICE_NAME)) {
                     scanner.stop();
-                    getBleManager().connect(getBaseContext(), device.getAddress());
+                    lastDiscoveredBleAddress = device.getAddress();
+                    getBleManager().connect(getBaseContext(), lastDiscoveredBleAddress);
                 }
             }
         });
@@ -99,7 +101,8 @@ public class BleSensorsRecordService extends BleService {
     @Override
     public void onServiceDiscovered() {
         Log.d(TAG, "Service discovered");
-        enableSensor(sensorToRead, true);
+        //TODO cant be field in service
+        enableSensor(lastDiscoveredBleAddress, sensorToRead, true);
     }
 
     @Override

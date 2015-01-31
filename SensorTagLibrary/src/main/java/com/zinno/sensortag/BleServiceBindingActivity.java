@@ -13,6 +13,8 @@ import com.zinno.sensortag.ble.BleActionsReceiver;
 import com.zinno.sensortag.ble.BleServiceListener;
 import com.zinno.sensortag.config.AppConfig;
 
+import java.util.ArrayList;
+
 public abstract class BleServiceBindingActivity extends ActionBarActivity
         implements BleServiceListener,
         ServiceConnection {
@@ -20,6 +22,8 @@ public abstract class BleServiceBindingActivity extends ActionBarActivity
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
+    public static final String EXTRAS_DEVICE_NAMES = "DEVICE_NAMES";
+    public static final String EXTRAS_DEVICE_ADDRESSES = "DEVICE_ADDRESSES";
 
     private String deviceName;
     private String deviceAddress;
@@ -27,6 +31,8 @@ public abstract class BleServiceBindingActivity extends ActionBarActivity
     @SuppressWarnings("ConstantConditions")
     private BroadcastReceiver bleActionsReceiver =
             AppConfig.REMOTE_BLE_SERVICE ? new BleActionsReceiver(this) : null;
+    private ArrayList<String> deviceNames;
+    private ArrayList<String> deviceAddresses;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,8 @@ public abstract class BleServiceBindingActivity extends ActionBarActivity
         final Intent intent = getIntent();
         deviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         deviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+        deviceNames = intent.getStringArrayListExtra(EXTRAS_DEVICE_NAMES);
+        deviceAddresses = intent.getStringArrayListExtra(EXTRAS_DEVICE_ADDRESSES);
     }
 
     @Override
@@ -66,6 +74,14 @@ public abstract class BleServiceBindingActivity extends ActionBarActivity
 
     public String getDeviceAddress() {
         return deviceAddress;
+    }
+
+    public ArrayList<String> getDeviceNames() {
+        return deviceNames;
+    }
+
+    public ArrayList<String> getDeviceAddresses() {
+        return deviceAddresses;
     }
 
     public BleService getBleService() {
@@ -102,7 +118,13 @@ public abstract class BleServiceBindingActivity extends ActionBarActivity
         }
 
         // Automatically connects to the device upon successful start-up initialization.
-        bleService.getBleManager().connect(getBaseContext(), deviceAddress);
+        if (deviceAddresses != null) {
+            for (String address : deviceAddresses) {
+                bleService.getBleManager().connect(getBaseContext(), address);
+            }
+        } else {
+            bleService.getBleManager().connect(getBaseContext(), deviceAddress);
+        }
     }
 
     @Override

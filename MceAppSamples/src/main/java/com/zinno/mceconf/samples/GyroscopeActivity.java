@@ -1,7 +1,6 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +57,7 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
     @Override
     public void onServiceDiscovered() {
         sensorEnabled = true;
-        getBleService().enableSensor(sensor, true);
+        getBleService().enableSensor(getDeviceAddress(), sensor, true);
 
         if (sensor instanceof TiPeriodicalSensor) {
             TiPeriodicalSensor periodicalSensor = (TiPeriodicalSensor) sensor;
@@ -79,7 +78,7 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
 
         BleService bleService = getBleService();
         if (bleService != null && sensorEnabled) {
-            bleService.enableSensor(sensor, false);
+            bleService.enableSensor(getDeviceAddress(), sensor, false);
         }
 
         super.onPause();

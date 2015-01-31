@@ -91,8 +91,8 @@ public class BleService extends Service implements BleServiceListener {
      * @param sensor  sensor to be enabled/disabled
      * @param enabled If true, enable notification.  False otherwise.
      */
-    public void enableSensor(TiSensor<?> sensor, boolean enabled) {
-        bleManager.enableSensor(sensor, enabled);
+    public void enableSensor(String address, TiSensor<?> sensor, boolean enabled) {
+        bleManager.enableSensor(address, sensor, enabled);
     }
 
     /**
@@ -101,8 +101,8 @@ public class BleService extends Service implements BleServiceListener {
      *
      * @return A {@code List} of supported services.
      */
-    public List<BluetoothGattService> getSupportedGattServices() {
-        return bleManager.getSupportedGattServices();
+    public List<BluetoothGattService> getSupportedGattServices(String address) {
+        return bleManager.getSupportedGattServices(address);
     }
 
     @Override

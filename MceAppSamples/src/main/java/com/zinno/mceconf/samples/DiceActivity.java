@@ -70,7 +70,7 @@ public class DiceActivity extends BleServiceBindingActivity {
     public void onServiceDiscovered() {
         Log.d(TAG, "onServiceDiscovered");
 
-        getBleService().enableSensor(accelerationSensor, true);
+        getBleService().enableSensor(getDeviceAddress(), accelerationSensor, true);
         if (accelerationSensor instanceof TiPeriodicalSensor) {
             TiPeriodicalSensor periodicalSensor = (TiPeriodicalSensor) accelerationSensor;
             periodicalSensor.setPeriod(periodicalSensor.getMinPeriod());

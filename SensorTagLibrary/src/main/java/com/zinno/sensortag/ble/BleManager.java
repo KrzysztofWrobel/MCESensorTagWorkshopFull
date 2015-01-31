@@ -12,6 +12,7 @@ import android.util.Log;
 import com.zinno.sensortag.sensor.TiSensor;
 import com.zinno.sensortag.sensor.TiSensors;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BleManager implements BleExecutorListener {
@@ -23,19 +24,16 @@ public class BleManager implements BleExecutorListener {
 
     private final BleGattExecutor executor = BleUtils.createExecutor(this);
     private BluetoothAdapter adapter;
-    private BluetoothGatt gatt;
+    //TODO bimap
+    private HashMap<String, BluetoothGatt> adressToGattHashMap;
+    private HashMap<BluetoothGatt, String> gattToAdressHashMap;
 
-    private String deviceAddress;
     private int connectionState = STATE_DISCONNECTED;
 
     private BleServiceListener serviceListener;
 
     public int getState() {
         return connectionState;
-    }
-
-    public String getConnectedDeviceAddress() {
-        return deviceAddress;
     }
 
     public void setServiceListener(BleServiceListener listener) {
@@ -56,6 +54,9 @@ public class BleManager implements BleExecutorListener {
             return false;
         }
 
+        adressToGattHashMap = new HashMap<>();
+        gattToAdressHashMap = new HashMap<>();
+
         return true;
     }
 
@@ -75,9 +76,10 @@ public class BleManager implements BleExecutorListener {
         }
 
         // Previously connected device.  Try to reconnect.
-        if (deviceAddress != null && address.equals(deviceAddress) && gatt != null) {
+        BluetoothGatt bluetoothGatt = adressToGattHashMap.get(address);
+        if (adressToGattHashMap.containsKey(address) && bluetoothGatt != null) {
             Log.d(TAG, "Trying to use an existing BluetoothGatt for connection.");
-            if (gatt.connect()) {
+            if (bluetoothGatt.connect()) {
                 connectionState = STATE_CONNECTING;
                 return true;
             } else {
@@ -86,15 +88,16 @@ public class BleManager implements BleExecutorListener {
         }
 
         final BluetoothDevice device = adapter.getRemoteDevice(address);
+        //TODO always false
         if (device == null) {
             Log.w(TAG, "Device not found.  Unable to connect.");
             return false;
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
-        gatt = device.connectGatt(context, false, executor);
+        BluetoothGatt gatt = device.connectGatt(context, false, executor);
         Log.d(TAG, "Trying to create a new connection.");
-        deviceAddress = address;
+        adressToGattHashMap.put(address, gatt);
         connectionState = STATE_CONNECTING;
         return true;
     }
@@ -106,6 +109,18 @@ public class BleManager implements BleExecutorListener {
      * callback.
      */
     public void disconnect() {
+        for (String address : adressToGattHashMap.keySet()) {
+            BluetoothGatt gatt = adressToGattHashMap.get(address);
+            if (adapter == null || gatt == null) {
+                Log.w(TAG, "BluetoothAdapter not initialized");
+                return;
+            }
+            gatt.disconnect();
+        }
+    }
+
+    public void disconnect(String address) {
+        BluetoothGatt gatt = adressToGattHashMap.get(address);
         if (adapter == null || gatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
             return;
@@ -113,29 +128,36 @@ public class BleManager implements BleExecutorListener {
         gatt.disconnect();
     }
 
+
     /**
      * After using a given BLE device, the app must call this method to ensure resources are
      * released properly.
      */
     public void close() {
-        if (gatt == null) {
-            return;
+        for (String address : adressToGattHashMap.keySet()) {
+            BluetoothGatt gatt = adressToGattHashMap.get(address);
+            if (gatt == null) {
+                return;
+            }
+            gatt.close();
+            gatt = null;
         }
-        gatt.close();
-        gatt = null;
     }
 
     public void updateSensor(TiSensor<?> sensor) {
-        if (sensor == null)
-            return;
+        for (String address : adressToGattHashMap.keySet()) {
+            BluetoothGatt gatt = adressToGattHashMap.get(address);
+            if (sensor == null)
+                return;
 
-        if (adapter == null || gatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
+            if (adapter == null || gatt == null) {
+                Log.w(TAG, "BluetoothAdapter not initialized");
+                return;
+            }
+
+            executor.update(sensor);
+            executor.execute(gatt);
         }
-
-        executor.update(sensor);
-        executor.execute(gatt);
     }
 
     /**
@@ -144,7 +166,8 @@ public class BleManager implements BleExecutorListener {
      * @param sensor  sensor to be enabled/disabled
      * @param enabled If true, enable notification.  False otherwise.
      */
-    public void enableSensor(TiSensor<?> sensor, boolean enabled) {
+    public void enableSensor(String address, TiSensor<?> sensor, boolean enabled) {
+        BluetoothGatt gatt = adressToGattHashMap.get(address);
         if (sensor == null)
             return;
 
@@ -163,7 +186,9 @@ public class BleManager implements BleExecutorListener {
      *
      * @return A {@code List} of supported services.
      */
-    public List<BluetoothGattService> getSupportedGattServices() {
+    public List<BluetoothGattService> getSupportedGattServices(String address) {
+
+        BluetoothGatt gatt = adressToGattHashMap.get(address);
         if (gatt == null)
             return null;
 
@@ -199,7 +224,8 @@ public class BleManager implements BleExecutorListener {
      *
      * @param characteristic The characteristic to read from.
      */
-    public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
+    public void readCharacteristic(String address, BluetoothGattCharacteristic characteristic) {
+        BluetoothGatt gatt = adressToGattHashMap.get(address);
         if (adapter == null || gatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
             return;
