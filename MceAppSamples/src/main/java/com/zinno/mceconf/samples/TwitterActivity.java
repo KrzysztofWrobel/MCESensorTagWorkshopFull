@@ -43,12 +43,12 @@ public class TwitterActivity extends BleServiceBindingActivity {
     }
 
     @Override
-    public void onDisconnected() {
+    public void onDisconnected(String deviceAddress) {
         finish();
     }
 
     @Override
-    public void onServiceDiscovered() {
+    public void onServiceDiscovered(String deviceAddress) {
         sensorEnabled = true;
 
 //        getBleService().enableSensor(gyroscopeSensor, true);
@@ -84,7 +84,7 @@ public class TwitterActivity extends BleServiceBindingActivity {
     }
 
     @Override
-    public void onDataAvailable(String serviceUuid, String characteristicUUid, String text, byte[] data) {
+    public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
         Log.d(TAG, String.format("ServiceUUID: %s, CharacteristicUUIS: %s", serviceUuid, characteristicUUid));
         Log.d(TAG, String.format("Data: %s", text));
 

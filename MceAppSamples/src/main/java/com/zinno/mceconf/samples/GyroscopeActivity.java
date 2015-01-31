@@ -50,12 +50,12 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
     }
 
     @Override
-    public void onDisconnected() {
+    public void onDisconnected(String deviceAddress) {
         finish();
     }
 
     @Override
-    public void onServiceDiscovered() {
+    public void onServiceDiscovered(String deviceAddress) {
         sensorEnabled = true;
         getBleService().enableSensor(getDeviceAddress(), sensor, true);
 
@@ -85,7 +85,7 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
     }
 
     @Override
-    public void onDataAvailable(String serviceUuid, String characteristicUUid, String text, byte[] data) {
+    public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
         String split[] = text.split("\n");
         if (split.length != 3) {
             Log.e(TAG, "onDataAvailable: text split != 3");

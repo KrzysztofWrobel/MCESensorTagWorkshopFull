@@ -73,7 +73,7 @@ public class DiceActivity extends BleServiceBindingActivity {
     }
 
     @Override
-    public void onServiceDiscovered() {
+    public void onServiceDiscovered(String deviceAddress) {
         sensorEnabled = true;
         Log.d(TAG, "onServiceDiscovered");
 
@@ -87,7 +87,7 @@ public class DiceActivity extends BleServiceBindingActivity {
     }
 
     @Override
-    public void onDataAvailable(String serviceUuid, String characteristicUUid, String text, byte[] data) {
+    public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
         Log.d(TAG, String.format("ServiceUUID: %s, CharacteristicUUIS: %s", serviceUuid, characteristicUUid));
         Log.d(TAG, String.format("Data: %s", text));
 
@@ -170,17 +170,6 @@ public class DiceActivity extends BleServiceBindingActivity {
         }
 
         return rolled;
-    }
-
-
-    @Override
-    public void onConnected() {
-        super.onConnected();
-    }
-
-    @Override
-    public void onDisconnected() {
-        super.onDisconnected();
     }
 
     @Override
