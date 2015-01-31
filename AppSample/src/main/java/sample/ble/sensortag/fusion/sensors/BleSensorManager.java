@@ -70,12 +70,12 @@ public class BleSensorManager extends ISensorManager implements BleServiceListen
     public void registerSensor(int sensorType) {
         final BleSensor sensor = (BleSensor) getSensor(sensorType);
         sensors.put(sensorType, sensor);
-        enableTiSensor(sensorType, true);
+        enableTiSensor(deviceAddress, sensorType, true);
     }
 
     @Override
     public void unregisterSensor(int sensorType) {
-        enableTiSensor(sensorType, false);
+        enableTiSensor(deviceAddress, sensorType, false);
         sensors.remove(sensorType);
     }
 
@@ -104,7 +104,7 @@ public class BleSensorManager extends ISensorManager implements BleServiceListen
         final int count = sensors.size();
         for (int i = 0; i < count; ++i) {
             final BleSensor sensor = sensors.valueAt(i);
-            enableTiSensor(sensor.getType(), true);
+            enableTiSensor(deviceAddress, sensor.getType(), true);
         }
     }
 
@@ -123,7 +123,7 @@ public class BleSensorManager extends ISensorManager implements BleServiceListen
         listener.onSensorChanged(sensorType, values);
     }
 
-    private void enableTiSensor(int sensorType, boolean enable) {
+    private void enableTiSensor(String address, int sensorType, boolean enable) {
         if (bleManager.getState() != BleManager.STATE_CONNECTED)
             return;
         if (!isConnected)
@@ -132,7 +132,7 @@ public class BleSensorManager extends ISensorManager implements BleServiceListen
         final BleSensor sensor = (BleSensor) getSensor(sensorType);
         final TiRangeSensors<?, ?> tiSensors = sensor.getTiSensor();
         tiSensors.setPeriod(tiSensors.getMinPeriod());
-        bleManager.enableSensor(tiSensors, enable);
+        bleManager.enableSensor(address, tiSensors, enable);
         if (enable)
             bleManager.updateSensor(tiSensors);
         Log.d(TAG, (enable ? "enable" : "disable") + " sensor: " + tiSensors.getName());

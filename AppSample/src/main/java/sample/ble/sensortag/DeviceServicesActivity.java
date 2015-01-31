@@ -94,7 +94,7 @@ public class DeviceServicesActivity extends BleServiceBindingActivity
     @Override
     public void onServiceDiscovered() {
         // Show all the supported services and characteristics on the user interface.
-        displayGattServices(getBleService().getSupportedGattServices());
+        displayGattServices(getBleService().getSupportedGattServices(getDeviceAddress()));
     }
 
     @Override
@@ -112,10 +112,10 @@ public class DeviceServicesActivity extends BleServiceBindingActivity
         final TiSensor<?> sensor = TiSensors.getSensor(characteristic.getService().getUuid().toString());
 
         if (activeSensor != null)
-            getBleService().enableSensor(activeSensor, false);
+            getBleService().enableSensor(getDeviceAddress(), activeSensor, false);
 
         if (sensor == null) {
-            getBleService().getBleManager().readCharacteristic(characteristic);
+            getBleService().getBleManager().readCharacteristic(getDeviceAddress(), characteristic);
             return true;
         }
 
@@ -123,7 +123,7 @@ public class DeviceServicesActivity extends BleServiceBindingActivity
             return true;
 
         activeSensor = sensor;
-        getBleService().enableSensor(sensor, true);
+        getBleService().enableSensor(getDeviceAddress(), sensor, true);
         return true;
     }
 

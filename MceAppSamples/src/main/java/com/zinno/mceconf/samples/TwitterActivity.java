@@ -1,22 +1,14 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zinno.sensortag.BleService;
 import com.zinno.sensortag.BleServiceBindingActivity;
 import com.zinno.sensortag.info.TiInfoService;
-import com.zinno.sensortag.info.TiInfoServices;
 import com.zinno.sensortag.sensor.TiGyroscopeSensor;
 import com.zinno.sensortag.sensor.TiKeysSensor;
-import com.zinno.sensortag.sensor.TiPeriodicalSensor;
 import com.zinno.sensortag.sensor.TiSensor;
 import com.zinno.sensortag.sensor.TiSensors;
 
@@ -66,7 +58,7 @@ public class TwitterActivity extends BleServiceBindingActivity {
 //        Log.d(TAG, "XXX gyroscopeSensor=" + gyroscopeSensor);
 
         Log.d(TAG, "XXX keysSensor=" + keysSensor);
-        getBleService().enableSensor(keysSensor, true);
+        getBleService().enableSensor(getDeviceName(), keysSensor, true);
 
 //        sensor.notify(true);
 
@@ -88,8 +80,8 @@ public class TwitterActivity extends BleServiceBindingActivity {
     protected void onPause() {
         BleService bleService = getBleService();
         if (bleService != null && sensorEnabled) {
-            bleService.enableSensor(gyroscopeSensor, false);
-            bleService.enableSensor(keysSensor, false);
+            bleService.enableSensor(getDeviceName(), gyroscopeSensor, false);
+            bleService.enableSensor(getDeviceName(), keysSensor, false);
         }
 
         super.onPause();
