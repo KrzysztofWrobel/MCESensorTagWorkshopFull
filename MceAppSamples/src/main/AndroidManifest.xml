@@ -54,7 +54,10 @@
             android:label="@string/title_activity_magnetometer" />
         <activity
             android:name=".PressureActivity"
-            android:label="@string/title_activity_barometer"></activity>
+            android:label="@string/title_activity_barometer"/>
+        <activity
+            android:name=".HygrometerActivity"
+            android:label="@string/title_activity_hygrometer"/>
     </application>
 
 </manifest>

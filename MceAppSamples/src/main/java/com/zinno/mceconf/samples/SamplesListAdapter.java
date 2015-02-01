@@ -52,6 +52,12 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
 //                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "34:B1:F7:D5:04:01");
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "BC:6A:29:AC:7D:10");
                 break;
+            case HYGROMETER:
+                intent = new Intent(this.context, HygrometerActivity.class);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "Hygrometer Sensor");
+//                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "34:B1:F7:D5:04:01");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "BC:6A:29:AC:7D:10");
+                break;
             case MAGNETOMETER:
                 intent = new Intent(this.context, MagnetometerActivity.class);
                 ArrayList<String> deviceNames = new ArrayList<>();
@@ -66,7 +72,6 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "Dice Sensor");
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "BC:6A:29:AB:81:A9");
                 break;
-
             case BUTTON_GAME:
                 intent = new Intent(this.context, RunningButtonGameActivity.class);
                 ArrayList<String> deviceNames1 = new ArrayList<>();
