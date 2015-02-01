@@ -28,4 +28,5 @@
     <string name="title_activity_barometer">BarometerActivity</string>
     <string name="barometer_sample_name">Pressure</string>
     <string name="barometer_sample_icon">{fa-bed}</string>
+    <string name="title_activity_safe_lock">SafeLockActivity</string>
 </resources>
