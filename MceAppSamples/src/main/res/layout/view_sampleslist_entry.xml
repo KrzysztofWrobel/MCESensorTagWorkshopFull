@@ -17,9 +17,8 @@
         android:textColor="@android:color/white" />
 
     <TextView
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/nameTextView"
-        android:layout_centerInParent="true"
         android:layout_below="@id/iconTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
