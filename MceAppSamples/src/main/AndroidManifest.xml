@@ -48,7 +48,10 @@
             android:label="@string/title_activity_twitter" />
         <activity
             android:name=".Gesture2DActivity"
-            android:label="@string/title_activity_gesture2_d"></activity>
+            android:label="@string/title_activity_gesture2_d" />
+        <activity
+            android:name=".MagnetometerActivity"
+            android:label="@string/title_activity_magnetometer"></activity>
     </application>
 
 </manifest>
