@@ -1,11 +1,15 @@
 package com.zinno.mceconf.samples;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +20,6 @@ import com.zinno.sensortag.sensor.TiSensor;
 import com.zinno.sensortag.sensor.TiSensors;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -31,20 +34,14 @@ public class TwitterActivity extends BleServiceBindingActivity {
     @InjectView(R.id.rightButton)
     Button rightButton;
 
-//    @InjectView(R.id.infoContainer0)
-//    LinearLayout infoContainer0;
-//
-//    @InjectView(R.id.infoContainer1)
-//    Button infoContainer1;
-//
-//    @InjectView(R.id.infoContainer2)
-//    Button infoContainer2;
-
     @InjectView(R.id.morseTextView)
     TextView morseTextView;
 
     @InjectView(R.id.charsTextView)
     TextView charsTextView;
+
+    @InjectView(R.id.helpGridView)
+    GridView gridView;
 
     TiSensor<?> keysSensor;
 
@@ -53,6 +50,7 @@ public class TwitterActivity extends BleServiceBindingActivity {
     ButtonController buttonController;
     CharacterDetector characterDetector;
     ToneDetector toneDetector;
+    HelpAdapter helpAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,10 +61,27 @@ public class TwitterActivity extends BleServiceBindingActivity {
         buttonController = new ButtonController();
         characterDetector = new CharacterDetector();
         toneDetector = new ToneDetector();
+        helpAdapter = new HelpAdapter(this);
 
         setContentView(R.layout.activity_twitter);
 
         ButterKnife.inject(this);
+
+        gridView.setAdapter(helpAdapter);
+
+//        leftButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                characterDetector.onNewTone(Tone.DOT);
+//            }
+//        });
+//
+//        rightButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                characterDetector.onNewTone(Tone.DASH);
+//            }
+//        });
     }
 
     @Override
@@ -168,34 +183,15 @@ public class TwitterActivity extends BleServiceBindingActivity {
     }
 
     public class CharacterDetector {
-        private static final long DETECTION_TRESHOLD = 1500;
-
-        HashMap<String, String> morseCode = new HashMap<String, String>() {{
-            put("..", "I");
-
-            put(".___", "J");
-            put("_._", "K");
-            put("._..", "L");
-            put("__", "M");
-            put("_.", "N");
-            put("___", "O");
-            put(".__.", "P");
-            put("__._", "Q");
-            put("._.", "R");
-
-            put("...", "S");
-            put("_", "T");
-            put(".._", "U");
-            put("..._", "V");
-            put(".__", "W");
-            put("_.._", "X");
-            put("_.__", "Y");
-            put("__..", "Z");
-        }};
+        private static final long DETECTION_THRESHOLD = 2000;
 
         List<MorseCharacter> characters = new ArrayList<>();
         List<Tone> tones = new ArrayList<>();
         Handler handler = new Handler();
+
+        public List<Tone> getTones() {
+            return tones;
+        }
 
         public void onNewTone(Tone tone) {
             handler.removeCallbacks(detectionRunnable);
@@ -203,32 +199,11 @@ public class TwitterActivity extends BleServiceBindingActivity {
             tones.add(tone);
             updateUI();
 
-            handler.postDelayed(detectionRunnable, DETECTION_TRESHOLD);
-
-            Log.d(TAG, "tones=" + tones.size() + " " + characters.size());
-
-            /*
-            List<MorseCharacter> matching = MorseCharacter.getMatching(tones);
-
-            if (matching.size() == 0) {
-                // toast that there is an error
-
-                    morseTextView.setText("");
-                tones.clear();
-            } else if (matching.size() == 1) {
-                MorseCharacter morseCharacter = matching.get(0);
-                charsTextView.setText(charsTextView.getText() + morseCharacter.name());
-
-                morseTextView.setText("");
-                tones.clear();
-            } else {
-                // show help
-            }
-            */
+            handler.postDelayed(detectionRunnable, DETECTION_THRESHOLD);
         }
 
         public void deleteToneOrCharacter() {
-            Log.d(TAG, "before tones=" + tones.size() + " " + characters.size());
+            handler.removeCallbacks(detectionRunnable);
 
             if (tones.size() > 0) {
                 tones.remove(tones.size() - 1);
@@ -236,16 +211,9 @@ public class TwitterActivity extends BleServiceBindingActivity {
                 characters.remove(characters.size() - 1);
             }
 
-            handler.removeCallbacks(detectionRunnable);
+            updateUI();
 
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    updateUI();
-                }
-            });
-
-            Log.d(TAG, "after tones=" + tones.size() + " " + characters.size());
+            handler.postDelayed(detectionRunnable, DETECTION_THRESHOLD);
         }
 
         Runnable detectionRunnable = new Runnable() {
@@ -254,28 +222,26 @@ public class TwitterActivity extends BleServiceBindingActivity {
                 List<MorseCharacter> matching = MorseCharacter.getMatching(tones);
 
                 if (matching.size() == 0) {
-                    Toast.makeText(TwitterActivity.this, "Unknown more code", Toast.LENGTH_LONG).show();
-                    tones.clear();
-                    updateUI();
-                } else if (matching.size() == 1) {
-                    MorseCharacter morseCharacter = matching.get(0);
-
-                    Log.d(TAG, "got=" + morseCharacter);
+                    Toast.makeText(TwitterActivity.this, "Unknown morse code", Toast.LENGTH_LONG).show();
 
                     tones.clear();
-                    characters.add(morseCharacter);
-
-                    updateUI();
-                } else {
-
+                } else if (matching.size() >= 1) {
+                    for (MorseCharacter morseCharacter : matching) {
+                        if (morseCharacter.equals(tones)) {
+                            tones.clear();
+                            characters.add(morseCharacter);
+                        }
+                    }
                 }
+
+                updateUI();
             }
         };
 
         public void updateUI() {
             String tmp = "";
-            for (Tone tone: tones) {
-                tmp += tone.character;
+            for (Tone tone : tones) {
+                tmp += tone.character + " ";
             }
             if (TextUtils.isEmpty(tmp)) {
                 morseTextView.setVisibility(View.GONE);
@@ -285,7 +251,7 @@ public class TwitterActivity extends BleServiceBindingActivity {
             }
 
             tmp = "";
-            for (MorseCharacter morseCharacter: characters) {
+            for (MorseCharacter morseCharacter : characters) {
                 tmp += morseCharacter.name();
             }
             if (TextUtils.isEmpty(tmp)) {
@@ -294,8 +260,51 @@ public class TwitterActivity extends BleServiceBindingActivity {
                 charsTextView.setVisibility(View.VISIBLE);
                 charsTextView.setText(tmp);
             }
+
+            helpAdapter.notifyDataSetChanged();
         }
     }
+
+    public class HelpAdapter extends ArrayAdapter<MorseCharacter> {
+        @Override
+        public int getCount() {
+            return MorseCharacter.values().length;
+        }
+
+        public HelpAdapter(Context context) {
+            super(context, R.layout.view_morse_character);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = View.inflate(getContext(), R.layout.view_morse_character, null);
+            }
+
+            MorseCharacter morseCharacter = MorseCharacter.values()[position];
+
+            TextView textView;
+
+            textView = (TextView) convertView.findViewById(R.id.letterTextView);
+            textView.setText(morseCharacter.name());
+
+            textView = (TextView) convertView.findViewById(R.id.codeTextView);
+            String tmp = "";
+            for (char sign : morseCharacter.tones.toCharArray()) {
+                tmp += sign + " ";
+            }
+            textView.setText(tmp);
+
+            if (morseCharacter.matches(characterDetector.getTones())) {
+                convertView.setVisibility(View.VISIBLE);
+            } else {
+                convertView.setVisibility(View.GONE);
+            }
+
+            return convertView;
+        }
+    }
+
 
     public enum MorseCharacter {
         A("._"),
@@ -306,7 +315,24 @@ public class TwitterActivity extends BleServiceBindingActivity {
         F(".._."),
         G("__."),
         H("...."),
-        I("..");
+        I(".."),
+        J(".___"),
+        K("_._"),
+        L("._.."),
+        M("__"),
+        N("_."),
+        O("___"),
+        P(".__."),
+        Q("__._"),
+        R("._."),
+        S("..."),
+        T("_"),
+        U(".._"),
+        V("..._"),
+        W(".__"),
+        X("_.._"),
+        Y("_.__"),
+        Z("__..");
 
         String tones;
 
@@ -315,19 +341,33 @@ public class TwitterActivity extends BleServiceBindingActivity {
         }
 
         public static List<MorseCharacter> getMatching(List<Tone> tones) {
-            String tonesAsString = "";
-            for (Tone tone : tones) {
-                tonesAsString += tone.character;
-            }
-
             List<MorseCharacter> matching = new ArrayList<MorseCharacter>();
-            for (MorseCharacter morseCharacter: MorseCharacter.values()) {
-                if (morseCharacter.tones.startsWith(tonesAsString)) {
+
+            for (MorseCharacter morseCharacter : MorseCharacter.values()) {
+                if (morseCharacter.matches(tones)) {
                     matching.add(morseCharacter);
                 }
             }
 
             return matching;
+        }
+
+        public boolean matches(List<Tone> tonesList) {
+            String tonesAsString = "";
+            for (Tone tone : tonesList) {
+                tonesAsString += tone.character;
+            }
+
+            return tones.startsWith(tonesAsString);
+        }
+
+        public boolean equals(List<Tone> tonesList) {
+            String tonesAsString = "";
+            for (Tone tone : tonesList) {
+                tonesAsString += tone.character;
+            }
+
+            return tones.equals(tonesAsString);
         }
     }
 
