@@ -83,6 +83,15 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "SensorTag");
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "34:B1:F7:D5:04:01");
                 break;
+            case BAROMETER:
+                intent = new Intent(this.context, PressureActivity.class);
+                ArrayList<String> deviceNames2 = new ArrayList<>();
+                deviceNames2.add("Sensor Tag");
+                ArrayList<String> deviceAddresses2 = new ArrayList<>();
+                deviceAddresses2.add("BC:6A:29:AB:45:79");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAMES, deviceNames2);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESSES, deviceAddresses2);
+                break;
         }
 
         if (intent != null) {

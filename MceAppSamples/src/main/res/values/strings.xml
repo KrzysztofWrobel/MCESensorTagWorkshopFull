@@ -25,4 +25,7 @@
     <string name="right">Right</string>
     <string name="left">Left</string>
     <string name="send_tweet">Send a tweet</string>
+    <string name="title_activity_barometer">BarometerActivity</string>
+    <string name="barometer_sample_name">Pressure</string>
+    <string name="barometer_sample_icon">{fa-bed}</string>
 </resources>

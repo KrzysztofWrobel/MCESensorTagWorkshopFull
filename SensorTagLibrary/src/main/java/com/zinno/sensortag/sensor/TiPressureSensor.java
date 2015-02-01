@@ -12,7 +12,7 @@ import static java.lang.Math.pow;
  */
 public class TiPressureSensor extends TiSensor<Double> {
 
-    private static final String UUID_SERVICE = "f000aa40-0451-4000-b000-000000000000";
+    public static final String UUID_SERVICE = "f000aa40-0451-4000-b000-000000000000";
     private static final String UUID_DATA = "f000aa41-0451-4000-b000-000000000000";
     private static final String UUID_CONFIG = "f000aa42-0451-4000-b000-000000000000";
     private static final String UUID_CALIBRATION = "f000aa43-0451-4000-b000-000000000000";

@@ -51,7 +51,10 @@
             android:label="@string/title_activity_gesture2_d" />
         <activity
             android:name=".MagnetometerActivity"
-            android:label="@string/title_activity_magnetometer"></activity>
+            android:label="@string/title_activity_magnetometer" />
+        <activity
+            android:name=".PressureActivity"
+            android:label="@string/title_activity_barometer"></activity>
     </application>
 
 </manifest>
