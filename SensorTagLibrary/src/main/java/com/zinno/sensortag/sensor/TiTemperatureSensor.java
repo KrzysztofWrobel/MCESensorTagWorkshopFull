@@ -9,7 +9,7 @@ import static java.lang.Math.pow;
  */
 public class TiTemperatureSensor extends TiSensor<float[]> {
 
-    private static final String UUID_SERVICE = "f000aa00-0451-4000-b000-000000000000";
+    public static final String UUID_SERVICE = "f000aa00-0451-4000-b000-000000000000";
     private static final String UUID_DATA = "f000aa01-0451-4000-b000-000000000000";
     private static final String UUID_CONFIG = "f000aa02-0451-4000-b000-000000000000";
 
