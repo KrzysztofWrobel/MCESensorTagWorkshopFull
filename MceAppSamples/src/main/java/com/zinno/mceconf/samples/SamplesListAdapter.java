@@ -53,13 +53,7 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "BC:6A:29:AC:7D:10");
                 break;
             case MAGNETOMETER:
-                intent = new Intent(this.context, Gesture2DActivity.class);
-                ArrayList<String> deviceNames = new ArrayList<>();
-                deviceNames.add("SensorTag");
-                ArrayList<String> deviceAddresses = new ArrayList<>();
-                deviceAddresses.add("BC:6A:29:AB:81:A9");
-                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAMES, deviceNames);
-                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESSES, deviceAddresses);
+
                 break;
             case ACCELEROMETER:
                 intent = new Intent(this.context, DiceActivity.class);
