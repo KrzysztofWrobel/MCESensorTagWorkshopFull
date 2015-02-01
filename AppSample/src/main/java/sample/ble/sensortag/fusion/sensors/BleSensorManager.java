@@ -88,17 +88,17 @@ public class BleSensorManager extends ISensorManager implements BleServiceListen
     }
 
     @Override
-    public void onConnected() {
+    public void onConnected(String deviceAddress) {
         Log.d(TAG, "connected");
     }
 
     @Override
-    public void onDisconnected() {
+    public void onDisconnected(String deviceAddress) {
         Log.d(TAG, "disconnected");
     }
 
     @Override
-    public void onServiceDiscovered() {
+    public void onServiceDiscovered(String deviceAddress) {
         isConnected = true;
         Log.d(TAG, "services discovered");
         final int count = sensors.size();
@@ -109,7 +109,7 @@ public class BleSensorManager extends ISensorManager implements BleServiceListen
     }
 
     @Override
-    public void onDataAvailable(String serviceUuid, String characteristicUUid, String text, byte[] data) {
+    public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
         if (listener == null)
             return;
 
@@ -134,7 +134,7 @@ public class BleSensorManager extends ISensorManager implements BleServiceListen
         tiSensors.setPeriod(tiSensors.getMinPeriod());
         bleManager.enableSensor(address, tiSensors, enable);
         if (enable)
-            bleManager.updateSensor(tiSensors);
+            bleManager.updateSensor(address, tiSensors);
         Log.d(TAG, (enable ? "enable" : "disable") + " sensor: " + tiSensors.getName());
     }
 

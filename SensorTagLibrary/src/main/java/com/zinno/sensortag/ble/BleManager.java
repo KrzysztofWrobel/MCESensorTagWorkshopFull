@@ -145,20 +145,18 @@ public class BleManager implements BleExecutorListener {
         }
     }
 
-    public void updateSensor(TiSensor<?> sensor) {
-        for (String address : adressToGattHashMap.keySet()) {
-            BluetoothGatt gatt = adressToGattHashMap.get(address);
-            if (sensor == null)
-                return;
+    public void updateSensor(String deviceAddress, TiSensor<?> sensor) {
+        BluetoothGatt gatt = adressToGattHashMap.get(deviceAddress);
+        if (sensor == null)
+            return;
 
-            if (adapter == null || gatt == null) {
-                Log.w(TAG, "BluetoothAdapter not initialized");
-                return;
-            }
-
-            executor.update(gatt, sensor);
-            executor.executeNextAction();
+        if (adapter == null || gatt == null) {
+            Log.w(TAG, "BluetoothAdapter not initialized");
+            return;
         }
+
+        executor.update(gatt, sensor);
+        executor.executeNextAction();
     }
 
     /**

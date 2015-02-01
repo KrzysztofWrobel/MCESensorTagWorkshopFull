@@ -31,4 +31,33 @@ public class MathUtils {
 
         return -1;
     }
+
+    public static class LowPassFilter {
+        private float factor;
+        private float[] prevAcc;
+
+        public LowPassFilter() {
+            this.factor = 0.01f;
+            this.reset();
+        }
+
+        public LowPassFilter(float factor) {
+            this.factor = factor;
+            this.reset();
+        }
+
+        public void reset() {
+            this.prevAcc = new float[]{0.0f, 0.0f, 0.0f};
+        }
+
+        public float[] filterAlgorithm(float[] vector) {
+            float[] retVal = new float[3];
+            retVal[0] = vector[0] * this.factor + this.prevAcc[0] * (1.0f - this.factor);
+            retVal[1] = vector[1] * this.factor + this.prevAcc[1] * (1.0f - this.factor);
+            retVal[2] = vector[2] * this.factor + this.prevAcc[2] * (1.0f - this.factor);
+            this.prevAcc = retVal;
+            return retVal;
+        }
+    }
+
 }

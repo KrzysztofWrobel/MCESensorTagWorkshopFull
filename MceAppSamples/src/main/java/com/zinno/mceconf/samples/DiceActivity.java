@@ -82,7 +82,7 @@ public class DiceActivity extends BleServiceBindingActivity {
             TiPeriodicalSensor periodicalSensor = (TiPeriodicalSensor) accelerationSensor;
             periodicalSensor.setPeriod(periodicalSensor.getMinPeriod());
 
-            getBleService().getBleManager().updateSensor(accelerationSensor);
+            getBleService().getBleManager().updateSensor(deviceAddress, accelerationSensor);
         }
     }
 

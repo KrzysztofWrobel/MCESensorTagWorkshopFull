@@ -42,10 +42,13 @@
         <activity
             android:name=".RunningButtonGameActivity"
             android:label="@string/title_activity_running_button_game" />
-            android:label="@string/title_activity_dice" />
+        android:label="@string/title_activity_dice" />
         <activity
             android:name=".TwitterActivity"
             android:label="@string/title_activity_twitter" />
+        <activity
+            android:name=".Gesture2DActivity"
+            android:label="@string/title_activity_gesture2_d"></activity>
     </application>
 
 </manifest>

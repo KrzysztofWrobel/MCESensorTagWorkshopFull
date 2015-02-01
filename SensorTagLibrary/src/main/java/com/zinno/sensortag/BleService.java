@@ -74,8 +74,8 @@ public class BleService extends Service implements BleServiceListener {
         bleManager.close();
     }
 
-    public void updateSensor(TiSensor<?> sensor) {
-        bleManager.updateSensor(sensor);
+    public void updateSensor(String deviceAddress, TiSensor<?> sensor) {
+        bleManager.updateSensor(deviceAddress, sensor);
     }
 
     public BleManager getBleManager() {

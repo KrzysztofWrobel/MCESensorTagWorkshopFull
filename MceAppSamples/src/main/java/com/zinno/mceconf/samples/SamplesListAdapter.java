@@ -53,6 +53,13 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, "BC:6A:29:AC:7D:10");
                 break;
             case MAGNETOMETER:
+                intent = new Intent(this.context, Gesture2DActivity.class);
+                ArrayList<String> deviceNames = new ArrayList<>();
+                deviceNames.add("SensorTag");
+                ArrayList<String> deviceAddresses = new ArrayList<>();
+                deviceAddresses.add("BC:6A:29:AB:81:A9");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAMES, deviceNames);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESSES, deviceAddresses);
                 break;
             case ACCELEROMETER:
                 intent = new Intent(this.context, DiceActivity.class);
@@ -62,14 +69,14 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
 
             case BUTTON_GAME:
                 intent = new Intent(this.context, RunningButtonGameActivity.class);
-                ArrayList<String> deviceNames = new ArrayList<>();
-                deviceNames.add("Player 1 pad");
-                deviceNames.add("Player 2 pad");
-                ArrayList<String> deviceAddresses = new ArrayList<>();
-                deviceAddresses.add("BC:6A:29:AB:81:A9");
-                deviceAddresses.add("BC:6A:29:AB:45:79");
-                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAMES, deviceNames);
-                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESSES, deviceAddresses);
+                ArrayList<String> deviceNames1 = new ArrayList<>();
+                deviceNames1.add("Player 1 pad");
+                deviceNames1.add("Player 2 pad");
+                ArrayList<String> deviceAddresses1 = new ArrayList<>();
+                deviceAddresses1.add("BC:6A:29:AB:81:A9");
+                deviceAddresses1.add("BC:6A:29:AB:45:79");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAMES, deviceNames1);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESSES, deviceAddresses1);
                 break;
             case GYROSCOPE:
                 intent = new Intent(this.context, GyroscopeActivity.class);
