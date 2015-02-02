@@ -1,6 +1,7 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +43,9 @@ public class RunningButtonGameActivity extends BleServiceBindingActivity impleme
     @InjectView(R.id.b_reset)
     Button resetButton;
 
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
+
     private boolean sensorEnabled;
     private TiKeysSensor.SimpleKeysStatus player1KeyStatus;
     private TiKeysSensor.SimpleKeysStatus player2KeyStatus;
@@ -68,6 +72,15 @@ public class RunningButtonGameActivity extends BleServiceBindingActivity impleme
                 resetGame();
             }
         });
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RunningButtonGameActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.button_game_sample_name);
     }
 
     private void resetGame() {

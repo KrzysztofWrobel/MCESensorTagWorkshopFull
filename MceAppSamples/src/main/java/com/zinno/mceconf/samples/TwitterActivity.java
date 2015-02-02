@@ -3,6 +3,7 @@ package com.zinno.mceconf.samples;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +44,9 @@ public class TwitterActivity extends BleServiceBindingActivity {
     @InjectView(R.id.helpGridView)
     GridView gridView;
 
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
+
     TiSensor<?> keysSensor;
 
     boolean sensorEnabled = false;
@@ -69,19 +73,14 @@ public class TwitterActivity extends BleServiceBindingActivity {
 
         gridView.setAdapter(helpAdapter);
 
-//        leftButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                characterDetector.onNewTone(Tone.DOT);
-//            }
-//        });
-//
-//        rightButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                characterDetector.onNewTone(Tone.DASH);
-//            }
-//        });
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TwitterActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.twitter_sample_name);
     }
 
     @Override

@@ -7,9 +7,9 @@
 
     <string name="magnetometer_sample_name">Magnetometer</string>
     <string name="accelerometer_sample_name">Accelerometer</string>
-    <string name="button_game_sample_name">Button Game</string>
+    <string name="button_game_sample_name">Buttons Game</string>
     <string name="gyroscope_sample_name">Gyroscope</string>
-    <string name="twitter_sample_name">Morsetwitt</string>
+    <string name="twitter_sample_name">Buttons Morse</string>
 
     <string name="magnetometer_sample_icon">{mce-wand}</string>
     <string name="accelerometer_sample_icon">{mce-dice}</string>
@@ -23,8 +23,6 @@
 
     <string name="title_activity_gyroscope">GyroscopeActivity</string>
     <string name="title_activity_dice">DiceActivity</string>
-    <string name="title_activity_running_button_game">Running Buttons Game</string>
-    <string name="title_activity_twitter">Twitter Activity</string>
     <string name="title_activity_gesture2_d">Gesture2DActivity</string>
 
     <string name="hello_world">Hello world!</string>
