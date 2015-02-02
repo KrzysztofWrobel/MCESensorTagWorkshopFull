@@ -105,6 +105,11 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAMES, deviceNames2);
                 intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESSES, deviceAddresses2);
                 break;
+            case SAFE_LOCK:
+                intent = new Intent(this.context, SafeLockActivity.class);
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_NAME, "SensorTag");
+                intent.putExtra(BleServiceBindingActivity.EXTRAS_DEVICE_ADDRESS, MY_FIRST_SENSOR_TAG_MAC);
+                break;
         }
 
         if (intent != null) {

@@ -35,4 +35,6 @@
     <string name="temperature_sample_name">Temperature Sensor</string>
     <string name="temperature_sample_icon">{fa-beer}</string>
     <string name="title_activity_temperature">Temperature Sensor</string>
+    <string name="safe_lock_sample_name">Safe lock</string>
+    <string name="safe_lock_sample_icon">{fa-lock}</string>
 </resources>

@@ -8,7 +8,8 @@ public enum Samples {
     ACCELEROMETER(R.string.accelerometer_sample_name, R.string.accelerometer_sample_icon),
     BUTTON_GAME(R.string.button_game_sample_name, R.string.button_game_sample_icon),
     GYROSCOPE(R.string.gyroscope_sample_name, R.string.gyroscope_sample_icon),
-    BAROMETER(R.string.barometer_sample_name, R.string.barometer_sample_icon);
+    BAROMETER(R.string.barometer_sample_name, R.string.barometer_sample_icon),
+    SAFE_LOCK(R.string.safe_lock_sample_name, R.string.safe_lock_sample_icon);
 
     int nameId, iconId;
 
