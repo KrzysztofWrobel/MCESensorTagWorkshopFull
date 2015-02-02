@@ -36,6 +36,10 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
+            android:name=".MCEDeviceScanActivity"
+            android:label="@string/title_scan" />
+        <activity
+            android:screenOrientation="portrait"
             android:name=".GyroscopeActivity"
             android:label="@string/title_activity_gyroscope" />
         <activity
@@ -51,9 +55,6 @@
             android:name=".TwitterActivity"
             android:label="@string/title_activity_twitter" />
         <activity
-            android:name=".Gesture2DActivity"
-            android:label="@string/title_activity_gesture2_d" />
-        <activity
             android:screenOrientation="portrait"
             android:name=".MagnetometerActivity"
             android:label="@string/title_activity_magnetometer" />
@@ -63,7 +64,7 @@
             android:label="@string/title_activity_barometer" />
         <activity
             android:name=".SafeLockActivity"
-            android:label="@string/title_activity_safe_lock"></activity>
+            android:label="@string/title_activity_safe_lock" />
         <activity
             android:screenOrientation="portrait"
             android:name=".HygrometerActivity"
