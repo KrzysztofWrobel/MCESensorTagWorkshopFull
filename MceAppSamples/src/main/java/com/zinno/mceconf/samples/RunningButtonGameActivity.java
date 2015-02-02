@@ -2,6 +2,8 @@ package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -23,19 +25,22 @@ public class RunningButtonGameActivity extends BleServiceBindingActivity impleme
     private TiSensor<?> buttonSensor;
 
     @InjectView(R.id.tv_speed_player_one)
-    public TextView player1SpeedTextView;
+    TextView player1SpeedTextView;
 
     @InjectView(R.id.tv_speed_player_two)
-    public TextView player2SpeedTextView;
+    TextView player2SpeedTextView;
 
     @InjectView(R.id.tv_race_summary)
-    public TextView raceSummaryTextView;
+    TextView raceSummaryTextView;
 
     @InjectView(R.id.sb_player_one)
-    public SeekBar player1StatusSeekBar;
+    SeekBar player1StatusSeekBar;
 
     @InjectView(R.id.sb_player_two)
-    public SeekBar player2StatusSeekBar;
+    SeekBar player2StatusSeekBar;
+
+    @InjectView(R.id.b_reset)
+    Button resetButton;
 
     private boolean sensorEnabled;
     private TiKeysSensor.SimpleKeysStatus player1KeyStatus;
@@ -56,6 +61,20 @@ public class RunningButtonGameActivity extends BleServiceBindingActivity impleme
         player1StatusSeekBar.setOnSeekBarChangeListener(this);
         player2StatusSeekBar.setClickable(false);
         player2StatusSeekBar.setOnSeekBarChangeListener(this);
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetGame();
+            }
+        });
+    }
+
+    private void resetGame() {
+        gameStarted = true;
+        raceSummaryTextView.setText("Go go go!");
+        player1StatusSeekBar.setProgress(0);
+        player2StatusSeekBar.setProgress(0);
     }
 
     @Override
