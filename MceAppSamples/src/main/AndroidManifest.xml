@@ -50,9 +50,9 @@
             android:screenOrientation="portrait"
             android:name=".TwitterActivity"
             android:label="@string/title_activity_twitter" />
-        <!--<activity-->
-            <!--android:name=".Gesture2DActivity"-->
-            <!--android:label="@string/title_activity_gesture2_d" />-->
+        <activity
+            android:name=".Gesture2DActivity"
+            android:label="@string/title_activity_gesture2_d" />
         <activity
             android:screenOrientation="portrait"
             android:name=".MagnetometerActivity"
