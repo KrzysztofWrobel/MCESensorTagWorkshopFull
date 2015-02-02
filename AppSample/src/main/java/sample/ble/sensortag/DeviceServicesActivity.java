@@ -87,18 +87,17 @@ public class DeviceServicesActivity extends BleServiceBindingActivity
     }
 
     @Override
-    public void onDisconnected() {
+    public void onDisconnected(String deviceAddress) {
         finish();
     }
 
     @Override
-    public void onServiceDiscovered() {
-        // Show all the supported services and characteristics on the user interface.
+    public void onServiceDiscovered(String deviceAddress) {
         displayGattServices(getBleService().getSupportedGattServices(getDeviceAddress()));
     }
 
     @Override
-    public void onDataAvailable(String serviceUuid, String characteristicUUid, String text, byte[] data) {
+    public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
         dataField.setText(text);
     }
 
@@ -133,7 +132,7 @@ public class DeviceServicesActivity extends BleServiceBindingActivity
         if (sensor == null)
             return;
 
-        getBleService().updateSensor(sensor);
+        getBleService().updateSensor(getDeviceAddress(), sensor);
     }
 
     private void displayGattServices(List<BluetoothGattService> gattServices) {
