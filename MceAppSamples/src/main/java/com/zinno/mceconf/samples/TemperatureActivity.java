@@ -40,7 +40,7 @@ public class TemperatureActivity extends BleServiceBindingActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_hygrometer);
+        setContentView(R.layout.activity_temperature);
 
         ButterKnife.inject(this);
 
