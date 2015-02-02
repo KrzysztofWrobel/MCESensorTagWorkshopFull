@@ -24,6 +24,8 @@
         android:textColor="@color/colorPrimary" />
 
     <TextView
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:visibility="visible"
         android:id="@+id/nameTextView"
         android:layout_below="@id/iconTextView"
