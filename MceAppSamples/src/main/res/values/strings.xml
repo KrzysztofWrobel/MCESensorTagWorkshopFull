@@ -4,19 +4,26 @@
     <string name="title_activity_main">MCEConf App Samples</string>
     <string name="dice_state">Dice state: </string>
     <string name="action_settings">Settings</string>
+
     <string name="magnetometer_sample_name">Magnetometer</string>
     <string name="accelerometer_sample_name">Accelerometer</string>
     <string name="button_game_sample_name">Button Game</string>
     <string name="gyroscope_sample_name">Gyroscope</string>
-    <string name="magnetometer_sample_icon">{fa-magnet}</string>
-    <string name="accelerometer_sample_icon">{fa-rocket}</string>
-    <string name="button_game_sample_icon">{fa-gamepad}</string>
-    <string name="gyroscope_sample_icon">{fa-arrows}</string>
+    <string name="twitter_sample_name">Morsetwitt</string>
+
+    <string name="magnetometer_sample_icon">{mce-wand}</string>
+    <string name="accelerometer_sample_icon">{mce-dice}</string>
+    <string name="button_game_sample_icon">{mce-chars}</string>
+    <string name="gyroscope_sample_icon">{mce-dice}</string>
+    <string name="twitter_sample_icon">{mce-morse}</string>
+    <string name="barometer_sample_icon">{mce-throne}</string>
+    <string name="hygrometer_sample_icon">{mce-cloud}</string>
+    <string name="temperature_sample_icon">{mce-paw}</string>
+    <string name="safe_lock_sample_icon">{mce-safe}</string>
+
     <string name="title_activity_gyroscope">GyroscopeActivity</string>
     <string name="title_activity_dice">DiceActivity</string>
     <string name="title_activity_running_button_game">Running Buttons Game</string>
-    <string name="twitter_sample_name">Morsetwitt</string>
-    <string name="twitter_sample_icon">{fa-twitter}</string>
     <string name="title_activity_twitter">Twitter Activity</string>
     <string name="title_activity_gesture2_d">Gesture2DActivity</string>
 
@@ -27,16 +34,12 @@
     <string name="send_tweet">Send a tweet</string>
     <string name="title_activity_barometer">BarometerActivity</string>
     <string name="barometer_sample_name">Pressure</string>
-    <string name="barometer_sample_icon">{fa-cloud}</string>
     <string name="title_activity_safe_lock">SafeLockActivity</string>
     <string name="hygrometer_sample_name">Hygrometer</string>
-    <string name="hygrometer_sample_icon">{fa-hand-o-left}</string>
     <string name="title_activity_hygrometer">Hygrometer Demo</string>
     <string name="temperature_sample_name">Temperature Sensor</string>
-    <string name="temperature_sample_icon">{fa-beer}</string>
     <string name="title_activity_temperature">Temperature Sensor</string>
     <string name="safe_lock_sample_name">Safe lock</string>
-    <string name="safe_lock_sample_icon">{fa-lock}</string>
 
 
     <string name="action_scan">Scan And Choose Devices</string>
