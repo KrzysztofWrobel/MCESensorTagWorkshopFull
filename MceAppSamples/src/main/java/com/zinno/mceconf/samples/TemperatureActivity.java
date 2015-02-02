@@ -19,8 +19,10 @@ import butterknife.InjectView;
 public class TemperatureActivity extends BleServiceBindingActivity {
     private static final String TAG = TemperatureActivity.class.getSimpleName();
 
-    private static final double THRESHOLD = 15;
-    private static final int valuesRange = 20;
+    private static final double THRESHOLD = 5;
+    private static final int valuesRange = 6;
+
+    private float ambientTemp = 0;
 
     private float values[] = new float[valuesRange];
     private int valuesIdx = 0;
@@ -48,19 +50,20 @@ public class TemperatureActivity extends BleServiceBindingActivity {
     }
 
     private void estimateValues() {
-        float min = Float.MAX_VALUE;
-        float max = 0.0f;
+        float avg = 0;
 
         for (int idx = 0; idx < valuesRange; ++idx) {
-            min = (min > values[idx] ? values[idx] : min);
-            max = (max < values[idx] ? values[idx] : max);
+            avg += values[idx];
         }
 
-        Log.d(TAG, "min=" + min + ", max=" + max + ", diff=" + (max - min));
+        avg = avg / valuesRange;
 
-        if (max - min > THRESHOLD &&
-                (valuesIdx % valuesRange != 0)) {
+//        Log.d(TAG, "avg=" + avg + ", ambient=" + ambientTemp + ", valuesIdx=" + valuesIdx);
+
+        if (avg - ambientTemp >= THRESHOLD) {
             hugTextView.setVisibility(View.VISIBLE);
+        } else {
+            hugTextView.setVisibility(View.GONE);
         }
     }
 
@@ -85,8 +88,8 @@ public class TemperatureActivity extends BleServiceBindingActivity {
 
     @Override
     public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
-        Log.d(TAG, String.format("DeviceAddress: %s,ServiceUUID: %s, CharacteristicUUIS: %s", deviceAddress, serviceUuid, characteristicUUid));
-        Log.d(TAG, String.format("Data: %s", text));
+//        Log.d(TAG, String.format("DeviceAddress: %s,ServiceUUID: %s, CharacteristicUUIS: %s", deviceAddress, serviceUuid, characteristicUUid));
+//        Log.d(TAG, String.format("Data: %s", text));
 
         TiSensor<?> tiSensor = TiSensors.getSensor(serviceUuid);
         final TiTemperatureSensor temperatureSensor = (TiTemperatureSensor) tiSensor;
@@ -95,6 +98,8 @@ public class TemperatureActivity extends BleServiceBindingActivity {
         if (temp.length != 2) {
             return;
         }
+
+        ambientTemp = temp[0];
 
         values[valuesIdx] = temp[1];
 
