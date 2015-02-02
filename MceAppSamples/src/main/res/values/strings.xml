@@ -56,4 +56,7 @@
     <string name="title_devices">BLE Device Scan</string>
     <string name="title_scan">ScanActivity</string>
     <string name="refresh">Refresh</string>
+    <string name="first_device">First</string>
+    <string name="second_device">Second</string>
+    <string name="use_chosen_device_as">Use chosen device as:</string>
 </resources>

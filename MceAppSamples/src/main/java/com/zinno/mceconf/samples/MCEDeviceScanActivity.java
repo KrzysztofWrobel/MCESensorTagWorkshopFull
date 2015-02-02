@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.zinno.mceconf.samples.adapters.BleDevicesAdapter;
+import com.zinno.mceconf.samples.dialogs.DecideDeviceDialogFragment;
 import com.zinno.mceconf.samples.dialogs.EnableBluetoothDialog;
 import com.zinno.mceconf.samples.dialogs.ErrorDialog;
 import com.zinno.sensortag.ble.BleDevicesScanner;
@@ -155,6 +156,8 @@ public class MCEDeviceScanActivity extends ListActivity
         final BluetoothDevice device = leDeviceListAdapter.getDevice(position);
         if (device == null)
             return;
+        DecideDeviceDialogFragment decideDeviceDialogFragment = DecideDeviceDialogFragment.newInstance(device);
+        decideDeviceDialogFragment.show(getFragmentManager(), "DecideDeviceDialogFragment");
 
     }
 
