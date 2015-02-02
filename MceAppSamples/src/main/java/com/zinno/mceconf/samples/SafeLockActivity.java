@@ -6,10 +6,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.IconTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.joanzapata.android.iconify.IconTextView;
 import com.joanzapata.android.iconify.Iconify;
 import com.zinno.sensortag.BleService;
 import com.zinno.sensortag.BleServiceBindingActivity;
