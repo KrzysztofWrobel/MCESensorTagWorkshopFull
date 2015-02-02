@@ -52,4 +52,5 @@
 
     <string name="title_devices">BLE Device Scan</string>
     <string name="title_scan">ScanActivity</string>
+    <string name="refresh">Refresh</string>
 </resources>

@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,8 @@ public class MCEDeviceScanActivity extends ListActivity
     private static final int REQUEST_ENABLE_BT = 1;
     private static final long SCAN_PERIOD = 500;
 
+    Toolbar toolbar;
+
     private BleDevicesAdapter leDeviceListAdapter;
     private BluetoothAdapter bluetoothAdapter;
     private BleDevicesScanner scanner;
@@ -40,6 +43,29 @@ public class MCEDeviceScanActivity extends ListActivity
 
         setContentView(R.layout.device_scan_activity);
         final View emptyView = findViewById(R.id.empty_view);
+        toolbar = (Toolbar) findViewById(R.id.action_bar);
+        toolbar.inflateMenu(R.menu.gatt_scan);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_scan:
+                        leDeviceListAdapter.clear();
+                        if (scanner != null)
+                            scanner.start();
+                        refreshMenu();
+                        break;
+                    case R.id.menu_stop:
+                        if (scanner != null)
+                            scanner.stop();
+                        refreshMenu();
+                        break;
+                }
+                return true;
+            }
+        });
+        
         getListView().setEmptyView(emptyView);
 
         final int bleStatus = BleUtils.getBleStatus(getBaseContext());
@@ -68,9 +94,8 @@ public class MCEDeviceScanActivity extends ListActivity
         scanner.setScanPeriod(SCAN_PERIOD);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.gatt_scan, menu);
+    public boolean refreshMenu() {
+        Menu menu = toolbar.getMenu();
 
         if (scanner == null || !scanner.isScanning()) {
             menu.findItem(R.id.menu_stop).setVisible(false);
@@ -81,24 +106,6 @@ public class MCEDeviceScanActivity extends ListActivity
             menu.findItem(R.id.menu_scan).setVisible(false);
             menu.findItem(R.id.menu_refresh).setActionView(
                     R.layout.ab_indeterminate_progress);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_scan:
-                leDeviceListAdapter.clear();
-                if (scanner != null)
-                    scanner.start();
-                invalidateOptionsMenu();
-                break;
-            case R.id.menu_stop:
-                if (scanner != null)
-                    scanner.stop();
-                invalidateOptionsMenu();
-                break;
         }
         return true;
     }
@@ -158,7 +165,7 @@ public class MCEDeviceScanActivity extends ListActivity
         }
 
         scanner.start();
-        invalidateOptionsMenu();
+        refreshMenu();
     }
 
     @Override
