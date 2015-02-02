@@ -29,4 +29,10 @@
     <string name="barometer_sample_name">Pressure</string>
     <string name="barometer_sample_icon">{fa-bed}</string>
     <string name="title_activity_safe_lock">SafeLockActivity</string>
+    <string name="hygrometer_sample_name">Hygrometer</string>
+    <string name="hygrometer_sample_icon">{fa-hand-o-left}</string>
+    <string name="title_activity_hygrometer">Hygrometer Demo</string>
+    <string name="temperature_sample_name">Temperature Sensor</string>
+    <string name="temperature_sample_icon">{fa-beer}</string>
+    <string name="title_activity_temperature">Temperature Sensor</string>
 </resources>
