@@ -21,4 +21,10 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
+
+    <style name="ViewerToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
 </resources>

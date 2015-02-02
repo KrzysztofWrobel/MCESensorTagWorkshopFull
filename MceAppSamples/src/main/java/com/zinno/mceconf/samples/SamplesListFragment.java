@@ -1,9 +1,11 @@
 package com.zinno.mceconf.samples;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +21,9 @@ public class SamplesListFragment extends Fragment {
 
     @InjectView(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
 
     public static SamplesListFragment newInstance() {
         return new SamplesListFragment();
@@ -41,6 +46,23 @@ public class SamplesListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(samplesListAdapter);
+
+        toolbar.inflateMenu(R.menu.menu_main);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_settings) {
+                    Intent intent = new Intent(getActivity(), MCEDeviceScanActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return true;
+            }
+        });
+
+//        toolbar.setNavigationIcon(R.drawable.ic_launcher);
+        toolbar.setTitle(R.string.app_name);
 
         return v;
     }
