@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.joanzapata.android.iconify.Iconify;
 import com.zinno.sensortag.BleServiceBindingActivity;
@@ -14,9 +15,9 @@ import com.zinno.sensortag.BleServiceBindingActivity;
 import java.util.ArrayList;
 
 public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryViewHolder> {
-    //    public static final String MY_FIRST_SENSOR_TAG_MAC = "BC:6A:29:AC:7D:10"; // 34:B1:F7:D5:04:01
-    public static final String MY_FIRST_SENSOR_TAG_MAC = "BC:6A:29:AB:81:A9"; // 34:B1:F7:D5:04:01
-    public static final String MY_SECOND_SENSOR_TAG_MAC = "BC:6A:29:AB:45:79";
+    //TODO if you want to you can set your device mac address here
+    public static final String MY_FIRST_SENSOR_TAG_MAC = null;
+    public static final String MY_SECOND_SENSOR_TAG_MAC = null;
 
 
     Context context;
@@ -51,7 +52,6 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
     private void onSampleClick(Samples sample) {
         Intent intent = null;
 
-        //TODO needs improvements
         String myFirstSensorTagMac = MY_FIRST_SENSOR_TAG_MAC;
         BluetoothDevice firstDevice = LocalStorage.getDevice(context, 0); //Get first device from preferences
         if (firstDevice != null) {
@@ -61,6 +61,16 @@ public class SamplesListAdapter extends RecyclerView.Adapter<SamplesListEntryVie
         BluetoothDevice secondDevice = LocalStorage.getDevice(context, 1); //Get second device from preferences
         if (secondDevice != null) {
             mySecondSensorTagMac = secondDevice.getAddress();
+        }
+
+        if (myFirstSensorTagMac == null) {
+            //Try second device
+            myFirstSensorTagMac = mySecondSensorTagMac;
+        }
+
+        if (myFirstSensorTagMac == null) {
+            Toast.makeText(context, "You need to choose at least one Sensor Tag to use these samples. Go to settings.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         switch (sample) {
