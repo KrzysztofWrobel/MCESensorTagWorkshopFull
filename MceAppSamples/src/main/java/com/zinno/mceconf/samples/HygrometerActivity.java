@@ -128,7 +128,7 @@ public class HygrometerActivity extends BleServiceBindingActivity {
         final TiHumiditySensor tiHumiditySensor = (TiHumiditySensor) tiSensor;
 
         values[valuesIdx] = tiHumiditySensor.getData();
-        humidityTextView.setText("Humidity: " + values[valuesIdx]);
+        humidityTextView.setText(String.valueOf(values[valuesIdx]));
         valuesIdx = (valuesIdx + 1) % valuesRange;
 
         if (valuesCount > valuesRange)

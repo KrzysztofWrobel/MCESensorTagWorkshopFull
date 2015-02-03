@@ -15,25 +15,65 @@
         style="@style/ViewerToolbarStyle"
         />
 
-    <TextView
-        android:padding="20dp"
-        android:id="@+id/humidityTextView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="20"
-        android:textSize="28dp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:text="Blow strong and furious just like a wild typhoon!"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.joanzapata.android.iconify.IconTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="120dp"
+            android:text="@string/hygrometer_sample_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Humidity:"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/humidityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+    </LinearLayout>
 
     <TextView
         android:padding="20dp"
         android:id="@+id/stopTextView"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Enough! You can stop blowing!"
         android:textSize="28dp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:textStyle="bold" />
 
 </LinearLayout>
