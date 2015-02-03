@@ -22,7 +22,7 @@
         android:layout_margin="20dp">
 
         <TextView
-            android:text="Got on your bike! Next Tour de France can be yours!"
+            android:text="Get on your bike! Next Tour de France can be yours!"
             android:textSize="20dp"
             android:gravity="center"
             android:layout_width="0dp"
@@ -31,7 +31,7 @@
 
         <com.joanzapata.android.iconify.IconTextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="120dp"
