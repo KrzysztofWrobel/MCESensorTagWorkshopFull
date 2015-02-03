@@ -14,7 +14,7 @@
 
     <string name="magnetometer_sample_icon">{mce-wand}</string>
     <string name="accelerometer_sample_icon">{mce-dice}</string>
-    <string name="button_game_sample_icon">{mce-chars}</string>
+    <string name="button_game_sample_icon">{mce-guy}</string>
     <string name="gyroscope_sample_icon">{mce-wheel}</string>
     <string name="twitter_sample_icon">{mce-morse}</string>
     <string name="barometer_sample_icon">{mce-throne}</string>

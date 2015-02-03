@@ -27,11 +27,11 @@ import butterknife.InjectView;
 
 public class SafeLockActivity extends BleServiceBindingActivity {
     private static final String TAG = SafeLockActivity.class.getSimpleName();
-    private static final float THRESHOLD = 25;
+    private static final float THRESHOLD = 15;
     private static final float MAX_RANGE = 20;
 
-    private static String lockFontAwesome = "{fa-lock}";
-    private static String unlockFontAwesome = "{fa-unlock}";
+    private static String lockFontAwesome = "{mce_off}";
+    private static String unlockFontAwesome = "{mce_on}";
 
     @InjectView(R.id.tv_current_sequence)
     TextView currentSequenceTextView;
@@ -253,10 +253,9 @@ public class SafeLockActivity extends BleServiceBindingActivity {
                 }
                 previousDirection = SafeSequence.Direction.RIGHT;
             }
-
-
             float deltaAngle = (z - referenceZ) * (deltaTime / 1000f);
             rotationZ += deltaAngle;
+
             int currentValue = (int) Math.abs(rotationZ / 360 * MAX_RANGE);
             currentSequenceTextView.setText(String.format("%s - %d", ((previousDirection == SafeSequence.Direction.LEFT) ? "L" : "R"), currentValue));
             Log.d(TAG, "deltaAngle=" + deltaAngle);
@@ -266,7 +265,6 @@ public class SafeLockActivity extends BleServiceBindingActivity {
     }
 
     private void calibrateRotationReference() {
-        referenceZ = rotationZ;
         rotationZ = 0;
     }
 

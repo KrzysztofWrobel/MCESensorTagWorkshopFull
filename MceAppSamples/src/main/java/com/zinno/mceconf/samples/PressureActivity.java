@@ -128,7 +128,7 @@ public class PressureActivity extends BleServiceBindingActivity {
             freeOccupiedToggleButton.setChecked(state == State.OCCUPIED);
 
         }
-        if (calibrateEnv && calibrateValues.size() > 10) {
+        if (calibrateEnv && calibrateValues.size() > 3) {
 
             double calibrateValue = 0;
             for (double value : calibrateValues) {

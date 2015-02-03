@@ -30,6 +30,7 @@ public class MCEDeviceScanActivity extends ListActivity
 
     private static final int REQUEST_ENABLE_BT = 1;
     private static final long SCAN_PERIOD = 500;
+    public static final String SENSOR_TAG_PROD_NAME = "SensorTag";
 
     Toolbar toolbar;
 
@@ -66,7 +67,7 @@ public class MCEDeviceScanActivity extends ListActivity
                 return true;
             }
         });
-        
+
         getListView().setEmptyView(emptyView);
 
         final int bleStatus = BleUtils.getBleStatus(getBaseContext());
@@ -88,8 +89,10 @@ public class MCEDeviceScanActivity extends ListActivity
         scanner = new BleDevicesScanner(bluetoothAdapter, new BluetoothAdapter.LeScanCallback() {
             @Override
             public void onLeScan(final BluetoothDevice device, final int rssi, byte[] scanRecord) {
-                leDeviceListAdapter.addDevice(device, rssi);
-                leDeviceListAdapter.notifyDataSetChanged();
+                if (device != null && SENSOR_TAG_PROD_NAME.equals(device.getName())) {
+                    leDeviceListAdapter.addDevice(device, rssi);
+                    leDeviceListAdapter.notifyDataSetChanged();
+                }
             }
         });
         scanner.setScanPeriod(SCAN_PERIOD);

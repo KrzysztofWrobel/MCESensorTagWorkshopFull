@@ -1,95 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:keepScreenOn="true">
+    android:keepScreenOn="true"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/action_bar"
+        style="@style/ViewerToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:navigationContentDescription="@string/abc_action_bar_up_description"
-        style="@style/ViewerToolbarStyle"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Press buttons on Sensor Tag alternately and be the first one to finish!"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        android:layout_marginBottom="20dp" />
+        app:navigationContentDescription="@string/abc_action_bar_up_description" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Player 1" />
-
-        <TextView
-            android:id="@+id/tv_speed_player_one"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Speed:"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <SeekBar
-        android:id="@+id/sb_player_one"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:progress="0"
-        android:max="100" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Player 2" />
-
-        <TextView
-            android:id="@+id/tv_speed_player_two"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Speed:"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <SeekBar
-        android:id="@+id/sb_player_two"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:progress="0"
-        android:max="100" />
-
-    <TextView
-        android:id="@+id/tv_race_summary"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="20dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:textAppearance="@android:style/TextAppearance.Large" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/b_reset"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Reset game" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"
+                android:text="Press buttons on Sensor Tag alternately and be the first one to finish!"
+                android:textSize="20dp" />
+
+            <com.joanzapata.android.iconify.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/button_game_sample_icon"
+                android:textSize="120dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text=""
+            android:textAppearance="@android:style/TextAppearance.Large" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Player 1" />
+
+            <TextView
+                android:id="@+id/tv_speed_player_one"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Speed:"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/sb_player_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Player 2" />
+
+            <TextView
+                android:id="@+id/tv_speed_player_two"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Speed:"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/sb_player_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="0" />
+
+        <TextView
+            android:id="@+id/tv_race_summary"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/b_reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reset game" />
+    </LinearLayout>
 
 </LinearLayout>

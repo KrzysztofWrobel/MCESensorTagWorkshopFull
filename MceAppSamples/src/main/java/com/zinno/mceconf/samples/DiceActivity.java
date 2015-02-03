@@ -156,7 +156,7 @@ public class DiceActivity extends BleServiceBindingActivity {
 
         if (newState == DiceState.STOPPED) {
             int rolledNumber = getRolledNumber();
-            rolledNumberTextView.setText(String.format("You have rolled: %d !", rolledNumber));
+            rolledNumberTextView.setText(String.valueOf(rolledNumber));
         }
     }
 

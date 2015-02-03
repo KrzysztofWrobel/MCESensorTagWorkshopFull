@@ -1,51 +1,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
+    android:keepScreenOn="true"
     tools:context="com.zinno.mceconf.samples.SafeLockActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/action_bar"
+        style="@style/ViewerToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:navigationContentDescription="@string/abc_action_bar_up_description"
-        style="@style/ViewerToolbarStyle"
-        />
-
-    <TextView
-        android:id="@+id/tv_current_sequence"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textAppearance="@android:style/TextAppearance.Large" />
+        app:navigationContentDescription="@string/abc_action_bar_up_description" />
 
     <LinearLayout
-        android:id="@+id/ll_sequence"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal" />
-
-    <com.joanzapata.android.iconify.IconTextView
-        android:id="@+id/ictv_lock"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="20dp"
         android:layout_weight="1"
-        android:shadowColor="#22000000"
-        android:shadowDx="3"
-        android:shadowDy="3"
-        android:shadowRadius="1"
-        android:gravity="center"
-        android:textSize="@dimen/icon_size"
-        android:textColor="@android:color/white" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/b_reset"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Reset" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"
+                android:text="Use your SensorTag as Safe Lock. Put it flat on the table and rotate. Try to guess correct sequence. Start from left, then right, once again left ..."
+                android:textSize="16dp" />
+
+            <com.joanzapata.android.iconify.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/safe_lock_sample_icon"
+                android:textSize="120dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_current_sequence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/ll_sequence"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal" />
+
+        <com.joanzapata.android.iconify.IconTextView
+            android:id="@+id/ictv_lock"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:shadowColor="#22000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/icon_size" />
+
+        <Button
+            android:id="@+id/b_reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reset" />
+    </LinearLayout>
+
 
 </LinearLayout>
