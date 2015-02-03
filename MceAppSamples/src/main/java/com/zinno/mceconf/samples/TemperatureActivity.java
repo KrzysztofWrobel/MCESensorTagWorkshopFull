@@ -114,7 +114,7 @@ public class TemperatureActivity extends BleServiceBindingActivity {
 
         values[valuesIdx] = temp[1];
 
-        tempTextView.setText("Temperature: " + values[valuesIdx]);
+        tempTextView.setText(String.valueOf(values[valuesIdx]));
         valuesIdx = (valuesIdx + 1) % valuesRange;
 
         if (valuesCount > valuesRange)

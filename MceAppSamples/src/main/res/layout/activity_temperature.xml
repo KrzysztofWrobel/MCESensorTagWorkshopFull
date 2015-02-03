@@ -12,28 +12,67 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:navigationContentDescription="@string/abc_action_bar_up_description"
-        style="@style/ViewerToolbarStyle"
-        />
+        style="@style/ViewerToolbarStyle" />
 
-    <TextView
-        android:padding="20dp"
-        android:id="@+id/tempTextView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="20"
-        android:textSize="28dp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:text="Take the sensor into your hand"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.joanzapata.android.iconify.IconTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="120dp"
+            android:text="@string/temperature_sample_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Temperature:"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tempTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+    </LinearLayout>
 
     <TextView
         android:padding="20dp"
         android:id="@+id/hugTextView"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="You can hug me now!"
         android:textSize="28dp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:textStyle="bold" />
 
 </LinearLayout>
