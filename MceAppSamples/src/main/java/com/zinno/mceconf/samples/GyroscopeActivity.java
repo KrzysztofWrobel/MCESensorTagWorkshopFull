@@ -35,6 +35,9 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
 
     long lastTime = -1;
     float firstZ = 0f;
+
+    Dimens calibration;
+
     float rotationZ = 0;
 
     @Override
@@ -69,7 +72,8 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
 
         if (sensor instanceof TiPeriodicalSensor) {
             TiPeriodicalSensor periodicalSensor = (TiPeriodicalSensor) sensor;
-            periodicalSensor.setPeriod(periodicalSensor.getMinPeriod());
+            periodicalSensor.setPeriod(10);
+//            periodicalSensor.getMinPeriod());
             getBleService().getBleManager().updateSensor(deviceAddress, sensor);
         }
     }
@@ -96,6 +100,12 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
             this.x = values[0];
             this.y = values[1];
             this.z = values[2];
+        }
+
+        public void adjust(Dimens calibration) {
+            this.x -= calibration.x;
+            this.y -= calibration.y;
+            this.z -= calibration.z;
         }
 
         @Override
@@ -138,23 +148,36 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
             return;
         }
 
-        Log.d(TAG, "dimens=" + dimens);
-
         long currentTime = System.currentTimeMillis();
 
-        // calibration
-        if (lastTime == -1) {
+        if (calibration == null) {
             lastTime = currentTime;
-            firstZ = dimens.z;
+            calibration = dimens;
             return;
         }
+
+        dimens.adjust(calibration);
+
+        Log.d(TAG, "dimens=" + dimens + " , diff " + (currentTime - lastTime));
+
+        double cadence = 0.f;
+        double length = dimens.x * dimens.x + dimens.y * dimens.y + dimens.z * dimens.z;
+        length = Math.sqrt(length);
+        cadence = length / 6.f; // length / 360 deg * 60s (to get RPM)
+
+        // calibration
+//        if (lastTime == -1) {
+//            lastTime = currentTime;
+//            firstZ = dimens.z;
+//            return;
+//        }
 
         // in millis
         float deltaTime = currentTime - lastTime;
 //        Log.d(TAG, "deltaTime=" + deltaTime);
 //        Log.d(TAG, "z-lastZ=" + (z - firstZ));
 
-        float deltaAngle = (dimens.z - firstZ) * (deltaTime / 1000f);
+        float deltaAngle = (dimens.z - calibration.z) * (deltaTime / 1000f);
 //        Log.d(TAG, "deltaAngle=" + deltaAngle);
 
         rotationZ += deltaAngle;
@@ -162,24 +185,8 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
         long rotation = (long) (Math.abs(rotationZ) % 360);
         angleTextView.setText(String.valueOf(rotation));
 
-        long rpm = (long) (rotation / 6f); // length / 360 deg * 60s (to get RPM)
-        rpmTextView.setText(String.valueOf(rpm));
+        rpmTextView.setText(String.valueOf((long) cadence));
 
         lastTime = currentTime;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
