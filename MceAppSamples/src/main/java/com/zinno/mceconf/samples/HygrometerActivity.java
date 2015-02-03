@@ -1,6 +1,7 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +38,9 @@ public class HygrometerActivity extends BleServiceBindingActivity {
     @InjectView(R.id.stopTextView)
     TextView stopTextView;
 
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
+
     private TiSensor<?> humiditySensor;
 
     private boolean sensorEnabled = false;
@@ -50,6 +54,15 @@ public class HygrometerActivity extends BleServiceBindingActivity {
         ButterKnife.inject(this);
 
         humiditySensor = TiSensors.getSensor(TiHumiditySensor.UUID_SERVICE);
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HygrometerActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.hygrometer_sample_name);
     }
 
     private boolean hasRaised() {

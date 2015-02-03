@@ -1,6 +1,7 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,9 @@ public class PressureActivity extends BleServiceBindingActivity {
 
     @InjectView(R.id.tb_free_occupied)
     ToggleButton freeOccupiedToggleButton;
+
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
 
     private enum State {
         FREE,
@@ -60,6 +64,15 @@ public class PressureActivity extends BleServiceBindingActivity {
                 calibrateEnv = true;
             }
         });
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PressureActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.barometer_sample_name);
     }
 
     @Override

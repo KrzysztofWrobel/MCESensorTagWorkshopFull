@@ -2,6 +2,7 @@ package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,8 +17,14 @@ import com.zinno.sensortag.sensor.TiPeriodicalSensor;
 import com.zinno.sensortag.sensor.TiSensor;
 import com.zinno.sensortag.sensor.TiSensors;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class GyroscopeActivity extends BleServiceBindingActivity {
     private static final String TAG = GyroscopeActivity.class.getSimpleName();
+
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
 
     TiSensor<?> sensor;
 
@@ -31,22 +38,20 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sensor = TiSensors.getSensor(TiGyroscopeSensor.UUID_SERVICE);
-
         setContentView(R.layout.activity_gyroscope);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-    }
+        ButterKnife.inject(this);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_gyroscope, menu);
-        return true;
+        sensor = TiSensors.getSensor(TiGyroscopeSensor.UUID_SERVICE);
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GyroscopeActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.gyroscope_sample_name);
     }
 
     @Override
@@ -69,13 +74,10 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume");
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause");
-
         BleService bleService = getBleService();
         if (bleService != null && sensorEnabled) {
             bleService.enableSensor(getDeviceAddress(), sensor, false);
@@ -140,21 +142,5 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_gyroscope, container, false);
-            return rootView;
-        }
     }
 }

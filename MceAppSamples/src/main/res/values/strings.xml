@@ -15,7 +15,7 @@
     <string name="magnetometer_sample_icon">{mce-wand}</string>
     <string name="accelerometer_sample_icon">{mce-dice}</string>
     <string name="button_game_sample_icon">{mce-chars}</string>
-    <string name="gyroscope_sample_icon">{mce-dice}</string>
+    <string name="gyroscope_sample_icon">{mce-wheel}</string>
     <string name="twitter_sample_icon">{mce-morse}</string>
     <string name="barometer_sample_icon">{mce-throne}</string>
     <string name="hygrometer_sample_icon">{mce-cloud}</string>
@@ -25,8 +25,6 @@
     <string name="title_activity_gyroscope">GyroscopeActivity</string>
     <string name="title_activity_gesture2_d">Gesture2DActivity</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_magnetometer">MagnetometerActivity</string>
     <string name="right">Right</string>
     <string name="left">Left</string>
     <string name="send_tweet">Send a tweet</string>

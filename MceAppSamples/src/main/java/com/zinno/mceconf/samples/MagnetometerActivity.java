@@ -1,6 +1,7 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,9 +28,14 @@ public class MagnetometerActivity extends BleServiceBindingActivity {
     private boolean sensorEnabled;
 
     @InjectView(R.id.sw_high_low)
+
     Switch switchHighLow;
     @InjectView(R.id.b_calibrate)
     Button calibrateButton;
+
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
+
     private static final float OFFSET = 20;
     private double lastValue;
 
@@ -60,6 +66,15 @@ public class MagnetometerActivity extends BleServiceBindingActivity {
                 calibrateEnv = true;
             }
         });
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MagnetometerActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.magnetometer_sample_name);
     }
 
 
