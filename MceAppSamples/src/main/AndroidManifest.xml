@@ -45,7 +45,7 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".DiceActivity"
-            android:label="@string/title_activity_dice" />
+            android:label="@string/accelerometer_sample_name" />
         <activity
             android:screenOrientation="portrait"
             android:name=".RunningButtonGameActivity"
@@ -64,7 +64,7 @@
             android:label="@string/title_activity_barometer" />
         <activity
             android:name=".SafeLockActivity"
-            android:label="@string/title_activity_safe_lock" />
+            android:label="@string/safe_lock_sample_name" />
         <activity
             android:screenOrientation="portrait"
             android:name=".HygrometerActivity"
@@ -72,7 +72,7 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".TemperatureActivity"
-            android:label="@string/title_activity_temperature"/>
+            android:label="@string/temperature_sample_name"/>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@
     <string name="button_game_sample_name">Buttons Game</string>
     <string name="gyroscope_sample_name">Gyroscope</string>
     <string name="twitter_sample_name">Buttons Morse</string>
+    <string name="temperature_sample_name">Temperature</string>
 
     <string name="magnetometer_sample_icon">{mce-wand}</string>
     <string name="accelerometer_sample_icon">{mce-dice}</string>
@@ -22,7 +23,6 @@
     <string name="safe_lock_sample_icon">{mce-safe}</string>
 
     <string name="title_activity_gyroscope">GyroscopeActivity</string>
-    <string name="title_activity_dice">DiceActivity</string>
     <string name="title_activity_gesture2_d">Gesture2DActivity</string>
 
     <string name="hello_world">Hello world!</string>
@@ -32,13 +32,9 @@
     <string name="send_tweet">Send a tweet</string>
     <string name="title_activity_barometer">BarometerActivity</string>
     <string name="barometer_sample_name">Pressure</string>
-    <string name="title_activity_safe_lock">SafeLockActivity</string>
     <string name="hygrometer_sample_name">Hygrometer</string>
     <string name="title_activity_hygrometer">Hygrometer Demo</string>
-    <string name="temperature_sample_name">Temperature Sensor</string>
-    <string name="title_activity_temperature">Temperature Sensor</string>
     <string name="safe_lock_sample_name">Safe lock</string>
-
 
     <string name="action_scan">Scan And Choose Devices</string>
     <string name="ok">OK</string>

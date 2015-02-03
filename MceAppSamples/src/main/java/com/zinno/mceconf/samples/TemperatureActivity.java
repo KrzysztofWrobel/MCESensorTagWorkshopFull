@@ -1,13 +1,12 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zinno.sensortag.BleService;
 import com.zinno.sensortag.BleServiceBindingActivity;
-import com.zinno.sensortag.sensor.TiHumiditySensor;
 import com.zinno.sensortag.sensor.TiSensor;
 import com.zinno.sensortag.sensor.TiSensors;
 import com.zinno.sensortag.sensor.TiTemperatureSensor;
@@ -34,6 +33,9 @@ public class TemperatureActivity extends BleServiceBindingActivity {
     @InjectView(R.id.hugTextView)
     TextView hugTextView;
 
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
+
     private TiSensor<?> tempSensor;
 
     private boolean sensorEnabled = false;
@@ -47,6 +49,15 @@ public class TemperatureActivity extends BleServiceBindingActivity {
         ButterKnife.inject(this);
 
         tempSensor = TiSensors.getSensor(TiTemperatureSensor.UUID_SERVICE);
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TemperatureActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.temperature_sample_name);
     }
 
     private void estimateValues() {

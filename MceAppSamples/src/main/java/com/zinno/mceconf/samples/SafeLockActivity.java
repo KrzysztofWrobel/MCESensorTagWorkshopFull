@@ -1,6 +1,7 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,6 +44,9 @@ public class SafeLockActivity extends BleServiceBindingActivity {
 
     @InjectView(R.id.b_reset)
     Button resetButton;
+
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
 
     TiSensor<?> gyroscopeSensor;
     boolean sensorEnabled = false;
@@ -126,6 +130,15 @@ public class SafeLockActivity extends BleServiceBindingActivity {
                 resetSequence();
             }
         });
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SafeLockActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.safe_lock_sample_name);
     }
 
     private void resetSequence() {

@@ -1,9 +1,11 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.zinno.sensortag.BleService;
@@ -30,6 +32,10 @@ public class DiceActivity extends BleServiceBindingActivity {
 
     @InjectView(R.id.tv_rolled_number)
     public TextView rolledNumberTextView;
+
+    @InjectView(R.id.action_bar)
+    Toolbar toolbar;
+
     private boolean sensorEnabled = false;
 
     private enum DiceState {
@@ -49,6 +55,15 @@ public class DiceActivity extends BleServiceBindingActivity {
         accelerationSensor = TiSensors.getSensor(TiAccelerometerSensor.UUID_SERVICE);
 
         ButterKnife.inject(this);
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DiceActivity.this.finish();
+            }
+        });
+        toolbar.setTitle(R.string.accelerometer_sample_name);
     }
 
     @Override
