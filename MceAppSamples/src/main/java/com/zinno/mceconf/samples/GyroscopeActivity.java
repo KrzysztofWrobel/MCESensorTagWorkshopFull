@@ -1,14 +1,11 @@
 package com.zinno.mceconf.samples;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zinno.sensortag.BleService;
 import com.zinno.sensortag.BleServiceBindingActivity;
@@ -25,6 +22,12 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
 
     @InjectView(R.id.action_bar)
     Toolbar toolbar;
+
+    @InjectView(R.id.angleTextView)
+    TextView angleTextView;
+
+    @InjectView(R.id.rpmTextView)
+    TextView rpmTextView;
 
     TiSensor<?> sensor;
 
@@ -86,45 +89,81 @@ public class GyroscopeActivity extends BleServiceBindingActivity {
         super.onPause();
     }
 
+    public static class Dimens {
+        float x, y, z;
+
+        public Dimens(float values[]) {
+            this.x = values[0];
+            this.y = values[1];
+            this.z = values[2];
+        }
+
+        @Override
+        public String toString() {
+            return "Dimens{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    ", z=" + z +
+                    '}';
+        }
+
+        public static Dimens fromString(String data) {
+            String split[] = data.split("\n");
+            if (split.length != 3) {
+                Log.e(TAG, "Dimens::fromString text split != 3");
+                return null;
+            }
+
+            float values[] = new float[3];
+
+            for (int i = 0; i < split.length; i++) {
+                String valSplit[] = split[i].split("=");
+                if (valSplit.length != 2) {
+                    Log.e(TAG, "Dimens::fromString val split != 2: " + split[i]);
+                    return null;
+                }
+
+                values[i] = Float.valueOf(valSplit[1]);
+            }
+
+            return new Dimens(values);
+        }
+    }
+
     @Override
     public void onDataAvailable(String deviceAddress, String serviceUuid, String characteristicUUid, String text, byte[] data) {
-        String split[] = text.split("\n");
-        if (split.length != 3) {
-            Log.e(TAG, "onDataAvailable: text split != 3");
+        Dimens dimens = Dimens.fromString(text);
+        if (dimens == null) {
+            Log.e(TAG, "onDataAvailable: cannot create Dimens from '" + text + "'");
             return;
         }
 
-        String zStr = split[2];
-
-        split = zStr.split("=");
-        if (split.length != 2) {
-            Log.e(TAG, "onDataAvailable: z value split != 2");
-            return;
-        }
-
-        float z = Float.valueOf(split[1]);
-        Log.d(TAG, "onDataAvailable: z=" + z);
+        Log.d(TAG, "dimens=" + dimens);
 
         long currentTime = System.currentTimeMillis();
 
+        // calibration
         if (lastTime == -1) {
             lastTime = currentTime;
-            firstZ = z;
+            firstZ = dimens.z;
             return;
         }
 
         // in millis
         float deltaTime = currentTime - lastTime;
-        Log.d(TAG, "deltaTime=" + deltaTime);
+//        Log.d(TAG, "deltaTime=" + deltaTime);
+//        Log.d(TAG, "z-lastZ=" + (z - firstZ));
 
-        Log.d(TAG, "z-lastZ=" + (z - firstZ));
-
-        float deltaAngle = (z - firstZ) * (deltaTime / 1000f);
-        Log.d(TAG, "deltaAngle=" + deltaAngle);
+        float deltaAngle = (dimens.z - firstZ) * (deltaTime / 1000f);
+//        Log.d(TAG, "deltaAngle=" + deltaAngle);
 
         rotationZ += deltaAngle;
 
-        Log.d(TAG, "rotation " + Math.abs(rotationZ) % 360);
+        long rotation = (long) (Math.abs(rotationZ) % 360);
+        angleTextView.setText(String.valueOf(rotation));
+
+        long rpm = (long) (rotation / 6f); // length / 360 deg * 60s (to get RPM)
+        rpmTextView.setText(String.valueOf(rpm));
 
         lastTime = currentTime;
     }
