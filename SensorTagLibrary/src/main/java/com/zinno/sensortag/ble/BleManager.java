@@ -110,13 +110,15 @@ public class BleManager implements BleExecutorListener {
      * callback.
      */
     public void disconnect() {
-        for (String address : adressToGattHashMap.keySet()) {
-            BluetoothGatt gatt = adressToGattHashMap.get(address);
-            if (adapter == null || gatt == null) {
-                Log.w(TAG, "BluetoothAdapter not initialized");
-                return;
+        if (adressToGattHashMap != null) {
+            for (String address : adressToGattHashMap.keySet()) {
+                BluetoothGatt gatt = adressToGattHashMap.get(address);
+                if (adapter == null || gatt == null) {
+                    Log.w(TAG, "BluetoothAdapter not initialized");
+                    return;
+                }
+                gatt.disconnect();
             }
-            gatt.disconnect();
         }
     }
 
@@ -135,13 +137,15 @@ public class BleManager implements BleExecutorListener {
      * released properly.
      */
     public void close() {
-        for (String address : adressToGattHashMap.keySet()) {
-            BluetoothGatt gatt = adressToGattHashMap.get(address);
-            if (gatt == null) {
-                return;
+        if (adressToGattHashMap != null) {
+            for (String address : adressToGattHashMap.keySet()) {
+                BluetoothGatt gatt = adressToGattHashMap.get(address);
+                if (gatt == null) {
+                    return;
+                }
+                gatt.close();
+                gatt = null;
             }
-            gatt.close();
-            gatt = null;
         }
     }
 

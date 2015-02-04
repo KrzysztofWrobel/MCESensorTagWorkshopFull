@@ -76,7 +76,7 @@ public class DiceActivity extends BleServiceBindingActivity {
         super.onPause();
         BleService bleService = getBleService();
         if (bleService != null && sensorEnabled) {
-            getBleService().enableSensor(getDeviceAddress(), accelerationSensor, true);
+            getBleService().enableSensor(getDeviceAddress(), accelerationSensor, false);
         }
     }
 

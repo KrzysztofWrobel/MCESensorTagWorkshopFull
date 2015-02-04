@@ -102,7 +102,7 @@ public class RunningButtonGameActivity extends BleServiceBindingActivity impleme
         BleService bleService = getBleService();
         if (bleService != null && sensorEnabled) {
             for (String address : getDeviceAddresses()) {
-                getBleService().enableSensor(address, buttonSensor, true);
+                getBleService().enableSensor(address, buttonSensor, false);
             }
         }
     }

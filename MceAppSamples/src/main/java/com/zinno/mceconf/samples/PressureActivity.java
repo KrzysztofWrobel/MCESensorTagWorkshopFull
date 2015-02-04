@@ -82,7 +82,7 @@ public class PressureActivity extends BleServiceBindingActivity {
         BleService bleService = getBleService();
         if (bleService != null && sensorEnabled) {
             for (String address : getDeviceAddresses()) {
-                getBleService().enableSensor(address, pressureSensor, true);
+                getBleService().enableSensor(address, pressureSensor, false);
             }
         }
     }

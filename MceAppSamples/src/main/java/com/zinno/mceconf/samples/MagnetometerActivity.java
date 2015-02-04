@@ -85,7 +85,7 @@ public class MagnetometerActivity extends BleServiceBindingActivity {
         BleService bleService = getBleService();
         if (bleService != null && sensorEnabled) {
             for (String address : getDeviceAddresses()) {
-                getBleService().enableSensor(address, magnetometerSensor, true);
+                getBleService().enableSensor(address, magnetometerSensor, false);
             }
         }
     }
